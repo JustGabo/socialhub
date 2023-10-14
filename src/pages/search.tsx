@@ -1,12 +1,15 @@
-import React from 'react'
-import SearchBar from '../components/search-bar'
+import React from "react";
+import SearchBar from "../components/search-bar";
+import BotttomBar from "../components/bottom-bar";
 
 function Search() {
   return (
-    <div className='text-white'>
-        <SearchBar/>
+    <div className="text-white">
+      <SearchBar />
+
+      <BotttomBar />
     </div>
-  )
+  );
 }
 
-export default Search
+export default Search;
