@@ -3,6 +3,8 @@ import { Route, Routes } from "react-router-dom";
 
 //importing context
 import UserProvider from "./context/userContext";
+import AccountProvider from "./context/accountContext";
+import FollowContextProvider from "./context/followContext";
 
 //importing pages
 import HomePage from "./pages/home";
@@ -15,18 +17,23 @@ import CreateAccount from "./pages/create-account";
 function App() {
   return (
     <UserProvider>
-      <div className="h-screen bg-black">
-        <div className="">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/user" element={<UserPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/create" element={<CreateAccount />} />
-          </Routes>
-        </div>
-      </div>
+      <AccountProvider>
+        <FollowContextProvider>
+          {" "}
+          <div className="h-screen bg-black">
+            <div className="">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/user" element={<UserPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/create" element={<CreateAccount />} />
+              </Routes>
+            </div>
+          </div>
+        </FollowContextProvider>
+      </AccountProvider>
     </UserProvider>
   );
 }

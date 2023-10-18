@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../components/user-page-header";
 import BotttomBar from "../components/bottom-bar";
 

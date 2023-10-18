@@ -1,5 +1,6 @@
-import React,{createContext,useState,useEffect} from 'react'
-import {supabase} from '../supabase/client'
+import React,{createContext,useState,useEffect, useContext} from 'react'
+import {supabase,} from '../supabase/client'
+import { User } from '@supabase/supabase-js'
 
 interface UserContextProps {
     children: React.ReactNode
@@ -7,12 +8,17 @@ interface UserContextProps {
 
 interface UserContextState {
     email: string
-    user: object
+    user: User | null
 }
 
 const initialState = {
     email:"",
-    user: {}
+    user: null
+}
+
+export const UseContext = ()=>{
+    const context = useContext(UserContext)
+    return context
 }
 
 export const UserContext = createContext<UserContextState>(initialState)
@@ -20,16 +26,28 @@ export const UserContext = createContext<UserContextState>(initialState)
 
 function UserContextProvider({children}: UserContextProps) {
 
-    const usuario = async ()=>{
-        const data = await supabase.auth.getUser()
-        console.log(data)
+    const usuario = async () => {
+        const { data: { user } } = await supabase.auth.getUser()
+        setUser(user)
+        setLoading(false)
     }
 
-    useEffect(()=>{
-        usuario()
-    },[])
+    const checkingUser = async () => {
+        await supabase.auth.onAuthStateChange((event) => {
+            if(event === "SIGNED_IN"){
+                usuario()
+            }
+        })
+    }
 
-    const [user, ] = useState({})
+    useEffect(() => {
+        usuario()
+        checkingUser()
+    }, [])
+
+    const [loading, setLoading] = useState<boolean>(true)
+
+    const [user, setUser] = useState<User | null>(null)
 
     const [email, ] = useState<string>("")
 
@@ -38,8 +56,9 @@ function UserContextProvider({children}: UserContextProps) {
         user
     }
 
+
   return (
-    <UserContext.Provider value={value}>{children}</UserContext.Provider>
+    <UserContext.Provider value={value}>{!loading && children}</UserContext.Provider>
   )
 }
 

@@ -1,5 +1,5 @@
 import { Home, Search, User } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useLocation,useNavigate} from "react-router-dom";
 
 function BottomBar() {

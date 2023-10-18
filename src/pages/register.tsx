@@ -1,27 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
+import {UseContext} from '../context/userContext'
+
 
 function Register() {
-  const [user, setUser] = useState({
+  const [usuario, setUsuario] = useState({
     email: "",
     password: "",
     namee: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setUsuario({ ...usuario, [e.target.name]: e.target.value });
   };
 
   const navite = useNavigate();
 
   const handleSubmit = async () => {
     const { data } = await supabase.auth.signUp({
-      email: user.email,
-      password: user.password,
+      email: usuario.email,
+      password: usuario.password,
       options: {
         data: {
-          name: user.namee,
+          name: usuario.namee,
         },
       },
     });
@@ -30,7 +32,23 @@ function Register() {
     } else {
       console.log("error");
     }
+    console.log(data)
   };
+
+  const navigate = useNavigate()
+  const {user} = UseContext()
+  
+  const redirect = ()=>{
+    if(user){
+      navigate("/")
+    }else{
+      return
+    }
+  }
+  
+    useEffect(()=>{
+       redirect()
+    },[user])
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -67,6 +85,12 @@ function Register() {
             name="password"
             onChange={(e) => handleChange(e)}
           />
+          <div className="flex items-center gap-2 text-xs">
+            <p>Already have an account?</p>
+            <p>
+              <Link to={"/login"}>Sign In</Link>
+            </p>
+          </div>
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -74,7 +98,7 @@ function Register() {
             }}
             className="p-2 mt-2 rounded-md bg-neutral-800"
           >
-            Log in
+            Sign Up
           </button>
         </form>
       </div>

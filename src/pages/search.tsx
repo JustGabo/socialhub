@@ -1,4 +1,3 @@
-import React from "react";
 import SearchBar from "../components/search-bar";
 import BotttomBar from "../components/bottom-bar";
 

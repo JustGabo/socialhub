@@ -1,30 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { UseContext } from "../context/userContext";
+
 function Login() {
-  const [user, setUser] = useState({
+  const [usuario, setUsuario] = useState({
     email: "",
     password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setUsuario({ ...usuario, [e.target.name]: e.target.value });
   };
 
   const navite = useNavigate();
 
   const handleSubmit = async () => {
-    const { data,error } = await supabase.auth.signInWithPassword({
-      email: user.email,
-      password: user.password,
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: usuario.email,
+      password: usuario.password,
     });
-    if(data){
-      navite('/')
-  }else{
-    console.log(error?.message)
-  }
-}
+    if (data) {
+      navite("/");
+    } else {
+      console.log(error?.message);
+    }
+  };
 
+  const navigate = useNavigate()
+  const {user} = UseContext()
+  
+  const redirect = ()=>{
+    if(user){
+      navigate("/")
+    }else{
+      return
+    }
+  }
+  
+    useEffect(()=>{
+       redirect()
+    },[user])
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -54,10 +70,21 @@ function Login() {
             name="password"
             onChange={(e) => handleChange(e)}
           />
-          <button onClick={(e)=>{
-            e.preventDefault()
-            handleSubmit()
-          }} className="p-2 mt-2 rounded-md bg-neutral-800">Log in</button>
+          <div className="flex items-center gap-2 text-xs">
+            <p>Don't have an account?</p>
+            <p>
+              <Link to={"/register"}>Sign Up</Link>
+            </p>
+          </div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            className="p-2 mt-2 rounded-md bg-neutral-800"
+          >
+            Sign In
+          </button>
         </form>
       </div>
     </div>
