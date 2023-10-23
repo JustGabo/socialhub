@@ -14,6 +14,7 @@ type account = {
 
 interface accountState {
   account: account;
+  getAccount?: () => void;
 }
 
 const initialState: accountState = {
@@ -22,6 +23,7 @@ const initialState: accountState = {
     bio: "",
     image: "",
   },
+  getAccount: () => {},
 
 };
 
@@ -52,13 +54,14 @@ function AccountContextProvider({ children }: Props) {
 
   const value = {
     account,
+    gettingAccount
   };
 
   useEffect(() => {
     if (user) {
       gettingAccount();
     }
-  }, []);
+  }, [user]);
 
   return (
     <AccountContext.Provider value={value}>{children}</AccountContext.Provider>

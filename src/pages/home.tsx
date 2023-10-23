@@ -9,8 +9,6 @@ function Home() {
   const { user } = UseContext();
 
   const redirect = () => {
-    console.log(user);
-
     if (!user) {
       navigate("/login");
     } else {
@@ -18,26 +16,33 @@ function Home() {
     }
   };
 
-  const signOut = async ()=>{
+  const signOut = async () => {
     const data = await supabase.auth.signOut();
-    console.log(data)
-  }
+    return data;
+  };
+
+
 
   useEffect(() => {
     redirect();
-    console.log(user)
   }, [user]);
 
   return (
     <div className="py-6 text-white ">
       <main className="px-4">
-        <h1 className="text-2xl font-bold">SocialHub</h1>
+        <div className="py-5">
+          <h1 className="text-3xl font-bold">SocialHub</h1>
+        </div>
       </main>
 
-      <button onClick={(e)=>{
-        e.preventDefault()
-        signOut()
-      }}>sign out</button>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          signOut();
+        }}
+      >
+        sign out
+      </button>
 
       <BotttomBar />
     </div>

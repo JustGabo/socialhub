@@ -12,7 +12,9 @@ import SearchPage from "./pages/search";
 import UserPage from "./pages/user";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
-import CreateAccount from "./pages/create-account";
+import CreateAccountPage from "./pages/create-account";
+import UploadPage from './pages/upload'
+import UserDetailsPage from './pages/userDetails'
 
 function App() {
   return (
@@ -28,7 +30,10 @@ function App() {
                 <Route path="/user" element={<UserPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
-                <Route path="/create" element={<CreateAccount />} />
+                <Route path="/create" element={<CreateAccountPage />} />
+                <Route path="/upload" element={<UploadPage />} />
+                <Route path="/upload" element={<UploadPage />} />
+                <Route path="/userdetails/:username" element={<UserDetailsPage />} />
               </Routes>
             </div>
           </div>

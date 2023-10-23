@@ -1,4 +1,4 @@
-import { Home, Search, User } from "lucide-react";
+import { Home, Search, User, PlusSquare } from "lucide-react";
 import  { useState, useEffect } from "react";
 import { useLocation,useNavigate} from "react-router-dom";
 
@@ -13,15 +13,18 @@ function BottomBar() {
   }, [pathname]);
 
   return (
-    <div className="fixed bottom-0 flex justify-between w-full px-6 py-3 border-t border-gray-400">
+    <div className="fixed bottom-0 flex justify-between w-full px-6 py-3 border-t border-gray-600">
       <button onClick={()=> navigate('/')}>
-          <Home color="#fff" strokeWidth={select == "home" ? 2 : 1} />
+          <Home color="#ddd" strokeWidth={select == "home" ? 2 : 1} />
       </button>
       <button onClick={()=> navigate('/search')}>
-          <Search color="#fff" strokeWidth={select == "search" ? 2 : 1} />
+          <Search color="#ddd" strokeWidth={select == "search" ? 2 : 1} />
+      </button>
+      <button onClick={()=> navigate('/upload')}>
+          <PlusSquare color="#ddd" strokeWidth={select == "upload" ? 2 : 1} />
       </button>
       <button onClick={()=> navigate('/user')}>
-          <User color="#fff" strokeWidth={select == "user" ? 2 : 1} />
+          <User color="#ddd" strokeWidth={select == "user" ? 2 : 1} />
       </button>
     </div>
   );

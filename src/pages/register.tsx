@@ -32,7 +32,6 @@ function Register() {
     } else {
       console.log("error");
     }
-    console.log(data)
   };
 
   const navigate = useNavigate()
