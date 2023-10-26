@@ -12,6 +12,8 @@ function UserPageHeader() {
 
   const navigate = useNavigate();
 
+  // functions
+
   const redirect = () => {
     if (!user) {
       navigate("/login");
@@ -19,6 +21,9 @@ function UserPageHeader() {
       return;
     }
   };
+
+
+  // useeffects
 
   useEffect(() => {
     redirect();

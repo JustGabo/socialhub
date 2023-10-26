@@ -2,6 +2,7 @@ import { ChevronLeft, UserCircle2 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
 import { useNavigate } from "react-router-dom";
+import {Input} from '../components/ui/input'
 
 interface Usuario {
   id: string;
@@ -59,7 +60,7 @@ function SearchBar() {
         >
           <ChevronLeft />
         </button>
-        <input
+        <Input
           onClick={() => {
             setBackActive(true);
             setActive(true);
@@ -67,7 +68,7 @@ function SearchBar() {
           onChange={(e) => {
             search(e);
           }}
-          className="w-full p-2 text-xs rounded-lg outline-none bg-neutral-800"
+          className="w-full p-2 text-xs border-neutral-500 rounded-lg outline-none bg-neutral-800"
           type="text"
           placeholder="search account"
         />

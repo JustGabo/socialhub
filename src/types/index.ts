@@ -5,3 +5,11 @@ export type User = {
     image: string;
     username: string;
 }
+
+export type Posts = {
+    id: number,
+    created_at: string,
+    posterId: string,
+    caption: string,
+    url: string,
+}

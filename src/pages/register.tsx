@@ -59,7 +59,7 @@ function Register() {
         >
           <label htmlFor="name">Name</label>
           <input
-            className="p-2 rounded-md outline-none bg-neutral-800"
+            className="p-2 rounded-md outline-none bg-neutral-800 bg-third"
             id="name"
             type="text"
             placeholder="Enter your name"
