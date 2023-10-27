@@ -27,31 +27,24 @@ function UserPagePosts() {
     }
   }, []);
 
-  useEffect(() => {
-    if (posts) {
-      console.log(posts);
-    }
-  }, [posts]);
-
   return (
-    <div className="border-t border-primary text-secondary pt-10">
-      <main className="pt-2 grid grid-cols-2 gap-[1px]">
+    <div className="border-t border-primary text-secondary pt-5">
+      <main className="pt-2 ">
         {posts.length == 0 ? (
-          <h1>No hay posts</h1>
+          <div className="flex items-center justify-center pt-28">
+            <h1 className="">This user hasn't post yet</h1>
+          </div>
         ) : (
-          <div>
+          <div className="grid grid-cols-3 gap-1">
             {posts?.map((post) => {
               return (
-                <ul>
+                <div key={post.id}>
                   <img
-                    className=""
-                    key={post.id}
+                    className="aspect-square object-cover"
                     src={post.url}
-                    alt={post.caption}
+                    alt=""
                   />
-
-                  <p>{post.caption}</p>
-                </ul>
+                </div>
               );
             })}
           </div>

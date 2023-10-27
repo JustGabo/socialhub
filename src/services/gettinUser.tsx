@@ -7,7 +7,8 @@ export const Redirect = async ()=>{
 
     if(!user){
         navigate("/login")
+        "no hay user"
     }else{
-        return
+        console.log("si hay user")
     }
- }
+}

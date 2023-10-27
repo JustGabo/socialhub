@@ -1,14 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { UsingAccountContext } from "../context/accountContext";
 import { useNavigate } from "react-router-dom";
 import { UseContext } from "../context/userContext";
 import { UsingFollowContext } from "../context/followContext";
 import { UserCircle2 } from "lucide-react";
+import { supabase } from "../supabase/client";
+import { useDropzone } from "react-dropzone";
 
 function UserPageHeader() {
-  const { account} = UsingAccountContext();
+  const { account } = UsingAccountContext();
   const { user } = UseContext();
   const { followers, following } = UsingFollowContext();
+  const [posts, setPosts] = useState(0);
+  const [file, setFile] = useState<File | null>(null);
 
   const navigate = useNavigate();
 
@@ -17,22 +21,29 @@ function UserPageHeader() {
   const redirect = () => {
     if (!user) {
       navigate("/login");
-    } else {
-      return;
     }
   };
 
+  const getPost = async () => {
+    const { count } = await supabase
+      .from("posts")
+      .select("*", { count: "exact", head: true })
+      .eq("posterId", user?.id);
+
+    setPosts(count || 0);
+  };
 
   // useeffects
 
   useEffect(() => {
     redirect();
+    getPost();
     console.log(user);
   }, [user]);
 
   return (
     <div>
-      {account? (
+      {account ? (
         <div className="px-4 text-white">
           <header className="flex flex-col items-center gap-3">
             {account.image ? (
@@ -53,7 +64,7 @@ function UserPageHeader() {
               </div>
               <div className="text-center">
                 <h3 className="text-sm font-semibold">Post</h3>
-                <p className="text-xs">23</p>
+                <p className="text-xs">{posts}</p>
               </div>
 
               <div className="text-center">

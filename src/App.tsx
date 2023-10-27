@@ -7,6 +7,7 @@ import AccountProvider from "./context/accountContext";
 import FollowContextProvider from "./context/followContext";
 
 //importing pages
+import EditPage from './pages/edit-profile'
 import HomePage from "./pages/home";
 import SearchPage from "./pages/search";
 import UserPage from "./pages/user";
@@ -27,13 +28,14 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/search" element={<SearchPage />} />
-                <Route path="/user" element={<UserPage />} />
+                <Route path="/profile" element={<UserPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/create" element={<CreateAccountPage />} />
                 <Route path="/upload" element={<UploadPage />} />
                 <Route path="/upload" element={<UploadPage />} />
                 <Route path="/userdetails/:username" element={<UserDetailsPage />} />
+                <Route path="/edit" element={<EditPage />} />
               </Routes>
             </div>
           </div>

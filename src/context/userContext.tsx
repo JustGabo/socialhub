@@ -1,65 +1,69 @@
-import React,{createContext,useState,useEffect, useContext} from 'react'
-import {supabase,} from '../supabase/client'
-import { User } from '@supabase/supabase-js'
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { supabase } from "../supabase/client";
+import { User } from "@supabase/supabase-js";
+import { useNavigate } from "react-router-dom";
 
 interface UserContextProps {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 
 interface UserContextState {
-    email: string
-    user: User | null
+  email: string;
+  user: User | null;
 }
 
 const initialState = {
-    email:"",
-    user: null
-}
+  email: "",
+  user: null,
+};
 
-export const UseContext = ()=>{
-    const context = useContext(UserContext)
-    return context
-}
+export const UseContext = () => {
+  const context = useContext(UserContext);
+  return context;
+};
 
-export const UserContext = createContext<UserContextState>(initialState)
+export const UserContext = createContext<UserContextState>(initialState);
 
+function UserContextProvider({ children }: UserContextProps) {
+  const usuario = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    setUser(user);
+    setLoading(false);
+  };
 
-function UserContextProvider({children}: UserContextProps) {
+  const navigate = useNavigate();
 
-    const usuario = async () => {
-        const { data: { user } } = await supabase.auth.getUser()
-        setUser(user)
-        setLoading(false)
-    }
+  const checkingUser = async () => {
+    await supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN") {
+        usuario();
+      }
+    });
+  };
 
-    const checkingUser = async () => {
-        await supabase.auth.onAuthStateChange((event) => {
-            if(event === "SIGNED_IN"){
-                usuario()
-            }
-        })
-    }
+  const [loading, setLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        usuario()
-        checkingUser()
-    }, [])
+  const [user, setUser] = useState<User | null>(null);
 
-    const [loading, setLoading] = useState<boolean>(true)
+  const [email] = useState<string>("");
 
-    const [user, setUser] = useState<User | null>(null)
+  const value = {
+    email,
+    user,
+  };
 
-    const [email, ] = useState<string>("")
-
-    const value = {
-        email,
-        user
-    }
-
+  useEffect(() => {
+    usuario();
+    checkingUser();
+  }, [user]);
 
   return (
-    <UserContext.Provider value={value}>{!loading && children}</UserContext.Provider>
-  )
+    <UserContext.Provider value={value}>
+      {!loading && children}
+    </UserContext.Provider>
+  );
 }
 
-export default UserContextProvider
+export default UserContextProvider;
