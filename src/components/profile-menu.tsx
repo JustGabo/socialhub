@@ -2,28 +2,28 @@ import { useEffect, useState } from "react";
 import { Settings, ChevronLeft, LogOut, Trash, Pencil } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../supabase/client";
+import { Button } from "../components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../components/ui/sheet";
 
 function ProfileMenu() {
   // usages
-  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const [gettingOut, setGettingOut] = useState(false);
+  const [open, setOpen] = useState(false);
 
   //   functions
-  const logOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    setGettingOut(true);
-    setTimeout(() => {
-        if(!error){
-            navigate("/login");
-        }
-    }, 2000);
-  };
 
   // useEffect
 
   return (
-    <div className="">
+    <div className="overflow-x-hidden">
       <header className="flex items-center justify-between w-[95%] m-auto">
         <button
           onClick={(e) => {
@@ -33,57 +33,60 @@ function ProfileMenu() {
         >
           <ChevronLeft strokeWidth={1} width={25} height={25} />
         </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setOpen(!open);
-          }}
-        >
-          <Settings width={20} height={20} strokeWidth={1} />
-        </button>
+
+        <Sheet open={open} onOpenChange={(open) => setOpen(open)}>
+          <SheetTrigger onClick={() => setOpen(true)}>
+            <Settings width={20} height={20} strokeWidth={1} />
+          </SheetTrigger>
+
+          <SheetContent>
+            <div className="h-full">
+              <div className="relative h-full">
+                <Link to={"/edit"} >
+                  <Button className="flex items-center text-primary bg-transparent mt-5 gap-2">
+                    <Pencil width={18} height={18} strokeWidth={1} />
+                    <span className="text-sm ml-1">Edit</span>
+                  </Button>
+                </Link>
+                <ul className="absolute bottom-10 text-primary flex flex-col gap-5">
+                  <li>
+                    <Button
+                      className="flex items-center text-primary bg-transparent text-sm"
+                      onClick={() => {
+                        setGettingOut(true);
+                        setOpen(false);
+                        setTimeout(() => {
+                          supabase.auth.signOut();
+                        }, 2000);
+                      }}
+                    >
+                      <LogOut width={20} height={20} strokeWidth={1} />
+                      <span className="ml-2 text-sm">Log Out</span>
+                    </Button>
+                  </li>
+
+                  <Button
+                    className="flex items-center text-red-500 bg-transparent text-sm"
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                  >
+                    <Trash width={20} height={20} strokeWidth={1} />
+                    <span className="ml-2 text-sm">Delete Account</span>
+                  </Button>
+                </ul>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
       </header>
 
-      <div
-        className={`h-screen absolute ${
-          open ? "right-0" : "right-0 opacity-0"
-        } w-[60%] bg-primary p-4  flex flex-col  rounded-sm gap-5 transition-all duration-500`}
-      >
-        <div className="relative h-full">
-          <Link to={'/edit'} className="flex items-center gap-2">
-            <Pencil width={15} height={15} strokeWidth={1}/>
-            <p className="text-sm">Edit</p>
-          </Link>
-          <p>Change Password</p>
-          <ul className="absolute bottom-10 flex flex-col gap-3">
-            <li>
-              <button
-                className="flex items-center  text-sm"
-                onClick={(e) => {
-                  e.preventDefault();
-                  logOut();
-                }}
-              >
-                <LogOut width={20} height={20} strokeWidth={1} />
-                <span className="ml-2">Log Out</span>
-              </button>
-            </li>
-
-            <button
-              className="flex items-center  text-sm"
-              onClick={() => {
-                navigate("/login");
-              }}
-            >
-              <Trash width={20} height={20} strokeWidth={1} />
-              <span className="ml-2">Delete Account</span>
-            </button>
-          </ul>
-        </div>
-      </div>
       {gettingOut && (
-        <div className="absolute w-full h-screen bg-primary top-0 opacity-75">
-          <div className="flex items-center justify-center h-full">
-            <h2 className="text-center text-2xl">Getting Out...</h2>
+        <div className="absolute w-full h-screen bg-secondary text-primary top-0 opacity-75">
+          <div className="flex items-center justify-center h-full ">
+            <div className="bg-muted animate-pulse  p-6 rounded-md">
+              <h2 className="text-center  text-sm">Getting Out...</h2>
+            </div>
           </div>
         </div>
       )}

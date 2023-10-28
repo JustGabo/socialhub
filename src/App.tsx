@@ -1,5 +1,8 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import {supabase} from './supabase/client'
+import {useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 
 //importing context
 import UserProvider from "./context/userContext";
@@ -18,12 +21,16 @@ import UploadPage from './pages/upload'
 import UserDetailsPage from './pages/userDetails'
 
 function App() {
+
+  const navigate = useNavigate()
+
+
   return (
     <UserProvider>
       <AccountProvider>
         <FollowContextProvider>
           {" "}
-          <div className="h-screen bg-black">
+          <div className="h-screen bg-secondary">
             <div className="">
               <Routes>
                 <Route path="/" element={<HomePage />} />

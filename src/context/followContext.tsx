@@ -50,7 +50,7 @@ function FollowContextProvider({ children }: Props) {
     if (user) {
       gettingFollow();
     }
-  }, []);
+  }, [user]);
 
   const value = {
     followers,

@@ -5,7 +5,7 @@ import ProfileMenu from '../components/profile-menu'
 
 function User() {
   return (
-    <div className="py-6 text-white flex flex-col gap-12">
+    <div className="py-6 text-white flex flex-col overflow-x-hidden gap-12">
       <ProfileMenu />
 
       <Header />

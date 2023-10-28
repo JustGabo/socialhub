@@ -5,15 +5,13 @@ import { UseContext } from "../context/userContext";
 import { UsingFollowContext } from "../context/followContext";
 import { UserCircle2 } from "lucide-react";
 import { supabase } from "../supabase/client";
-import { useDropzone } from "react-dropzone";
 
 function UserPageHeader() {
+  // usages
   const { account } = UsingAccountContext();
   const { user } = UseContext();
   const { followers, following } = UsingFollowContext();
   const [posts, setPosts] = useState(0);
-  const [file, setFile] = useState<File | null>(null);
-
   const navigate = useNavigate();
 
   // functions
@@ -39,12 +37,13 @@ function UserPageHeader() {
     redirect();
     getPost();
     console.log(user);
+    console.log(followers,following);
   }, [user]);
 
   return (
-    <div>
+    <div className="">
       {account ? (
-        <div className="px-4 text-white">
+        <div className="px-4 text-primary">
           <header className="flex flex-col items-center gap-3">
             {account.image ? (
               <img

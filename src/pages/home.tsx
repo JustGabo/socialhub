@@ -3,6 +3,8 @@ import BotttomBar from "../components/bottom-bar";
 import { useNavigate } from "react-router-dom";
 import { UseContext } from "../context/userContext";
 import { supabase } from "../supabase/client";
+import {UsingFollowContext} from '../context/followContext'
+import {UsingAccountContext} from '../context/accountContext'
 
 function Home() {
   const navigate = useNavigate();
@@ -20,8 +22,6 @@ function Home() {
     const data = await supabase.auth.signOut();
     return data;
   };
-
-
 
   useEffect(() => {
     redirect();

@@ -13,7 +13,7 @@ function BottomBar() {
   }, [pathname]);
 
   return (
-    <div className="fixed bottom-0 flex justify-between bg-primary text-secondary w-full px-6 py-3 border-t border-muted-foreground">
+    <div className="fixed bottom-0 flex justify-between bg-secondary text-primary w-full px-6 py-3 border-t border-muted">
       <button onClick={()=> navigate('/')}>
           <Home  strokeWidth={select == "home" ? 2 : 1} />
       </button>

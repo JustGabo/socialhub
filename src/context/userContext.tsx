@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "../supabase/client";
 import { User } from "@supabase/supabase-js";
-import { useNavigate } from "react-router-dom";
 
 interface UserContextProps {
   children: React.ReactNode;
@@ -33,12 +32,13 @@ function UserContextProvider({ children }: UserContextProps) {
     setLoading(false);
   };
 
-  const navigate = useNavigate();
 
   const checkingUser = async () => {
-    await supabase.auth.onAuthStateChange((event) => {
+    await supabase.auth.onAuthStateChange((event,session) => {
       if (event === "SIGNED_IN") {
         usuario();
+      }else if (!session){
+        setUser(null)
       }
     });
   };
@@ -57,7 +57,7 @@ function UserContextProvider({ children }: UserContextProps) {
   useEffect(() => {
     usuario();
     checkingUser();
-  }, [user]);
+  }, []);
 
   return (
     <UserContext.Provider value={value}>

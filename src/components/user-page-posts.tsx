@@ -28,7 +28,7 @@ function UserPagePosts() {
   }, []);
 
   return (
-    <div className="border-t border-primary text-secondary pt-5">
+    <div className="border-t border-muted text-primary pt-5">
       <main className="pt-2 ">
         {posts.length == 0 ? (
           <div className="flex items-center justify-center pt-28">
