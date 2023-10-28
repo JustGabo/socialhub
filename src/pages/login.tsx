@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
 import { useNavigate, Link } from "react-router-dom";
 import { UseContext } from "../context/userContext";
+import {Input} from '../components/ui/input'
+import {Button} from '../components/ui/button'
 
 function Login() {
   const [usuario, setUsuario] = useState({
@@ -43,8 +45,8 @@ function Login() {
     },[user])
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="w-full text-white">
+    <div className="flex items-center justify-center text-primary h-screen">
+      <div className="w-full ">
         <h2 className="mb-10 text-xl font-medium text-center">
           Log into your account
         </h2>
@@ -53,8 +55,8 @@ function Login() {
           className="flex flex-col gap-4 px-4 w-[90%] m-auto text-sm"
         >
           <label htmlFor="email">Email</label>
-          <input
-            className="p-2 rounded-md outline-none bg-neutral-800"
+          <Input
+            className="p-2 rounded-md outline-none bg-transparent border text-xs border-primary"
             id="email"
             type="email"
             placeholder="Enter your email"
@@ -62,9 +64,9 @@ function Login() {
             onChange={(e) => handleChange(e)}
           />
           <label htmlFor="password">Password</label>
-          <input
+          <Input
             id="password"
-            className="p-2 rounded-md outline-none bg-neutral-800"
+            className="p-2 rounded-md outline-none bg-transparent border text-xs border-primary"
             type="password"
             placeholder="Enter your password"
             name="password"
@@ -76,7 +78,7 @@ function Login() {
               <Link to={"/register"}>Sign Up</Link>
             </p>
           </div>
-          <button
+          <Button
             onClick={(e) => {
               e.preventDefault();
               handleSubmit();
@@ -84,7 +86,7 @@ function Login() {
             className="p-2 mt-2 rounded-md bg-neutral-800"
           >
             Sign In
-          </button>
+          </Button>
         </form>
       </div>
     </div>

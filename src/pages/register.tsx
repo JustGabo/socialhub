@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
 import { useNavigate,Link } from "react-router-dom";
 import {UseContext} from '../context/userContext'
+import {Input} from '../components/ui/input'
+import {Button} from '../components/ui/button'
 
 
 function Register() {
@@ -50,16 +52,16 @@ function Register() {
     },[user])
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="w-full text-white">
+    <div className="flex items-center justify-center text-primary h-screen">
+      <div className="w-full ">
         <h2 className="mb-10 text-xl font-medium text-center">Register</h2>
         <form
           action=""
           className="flex flex-col gap-4 px-4 w-[90%] m-auto text-sm"
         >
           <label htmlFor="name">Name</label>
-          <input
-            className="p-2 rounded-md outline-none bg-neutral-800 bg-third"
+          <Input
+            className="p-2 rounded-md outline-none bg-transparent border border-primary text-xs"
             id="name"
             type="text"
             placeholder="Enter your name"
@@ -67,8 +69,8 @@ function Register() {
             onChange={(e) => handleChange(e)}
           />
           <label htmlFor="email">Email</label>
-          <input
-            className="p-2 rounded-md outline-none bg-neutral-800"
+          <Input
+            className="p-2 rounded-md outline-none bg-transparent border border-primary text-xs"
             id="email"
             type="email"
             placeholder="Enter your email"
@@ -76,9 +78,9 @@ function Register() {
             onChange={(e) => handleChange(e)}
           />
           <label htmlFor="password">Password</label>
-          <input
+          <Input
             id="password"
-            className="p-2 rounded-md outline-none bg-neutral-800"
+            className="p-2 rounded-md outline-none bg-transparent border border-primary text-xs"
             type="password"
             placeholder="Enter your password"
             name="password"
@@ -90,7 +92,7 @@ function Register() {
               <Link to={"/login"}>Sign In</Link>
             </p>
           </div>
-          <button
+          <Button
             onClick={(e) => {
               e.preventDefault();
               handleSubmit();
@@ -98,7 +100,7 @@ function Register() {
             className="p-2 mt-2 rounded-md bg-neutral-800"
           >
             Sign Up
-          </button>
+          </Button>
         </form>
       </div>
     </div>

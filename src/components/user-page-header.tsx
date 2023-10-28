@@ -36,8 +36,6 @@ function UserPageHeader() {
   useEffect(() => {
     redirect();
     getPost();
-    console.log(user);
-    console.log(followers,following);
   }, [user]);
 
   return (
@@ -55,19 +53,19 @@ function UserPageHeader() {
               <UserCircle2 width="25%" height="25%" strokeWidth={0.5} />
             )}
 
-            <h2>{account.username}</h2>
+            <h2 className="font-normal text-lg">{account.username}</h2>
             <div className="flex justify-between w-[75%]">
-              <div className="text-center">
-                <h3 className="text-sm font-semibold">Followers</h3>
+              <div className="text-center font-light">
+                <h3 className="text-sm">Followers</h3>
                 <p className="text-xs">{followers}</p>
               </div>
-              <div className="text-center">
-                <h3 className="text-sm font-semibold">Post</h3>
+              <div className="text-center font-light">
+                <h3 className="text-sm">Post</h3>
                 <p className="text-xs">{posts}</p>
               </div>
 
-              <div className="text-center">
-                <h3 className="text-sm font-semibold">Following</h3>
+              <div className="text-center font-light">
+                <h3 className="text-sm">Following</h3>
                 <p className="text-xs">{following}</p>
               </div>
             </div>

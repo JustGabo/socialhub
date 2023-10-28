@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
 import { Link, useNavigate } from "react-router-dom";
 import { UseContext } from "../context/userContext";
+import {Button} from '../components/ui/button'
+import {Input} from '../components/ui/input'
 
 function CreateAccount() {
   const navigate = useNavigate();
@@ -40,8 +42,8 @@ function CreateAccount() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center h-screen px-4 py-6 text-white">
-      <div className="w-full text-white">
+    <div className="flex items-center justify-center text-primary h-screen px-4 py-6">
+      <div className="w-full ">
         <h2 className="mb-10 text-xl font-medium text-center">
           Create Account
         </h2>
@@ -50,8 +52,8 @@ function CreateAccount() {
           className="flex flex-col gap-4 px-4 w-[90%] m-auto text-sm"
         >
           <label htmlFor="username">Create Username</label>
-          <input
-            className="p-2 rounded-md outline-none bg-neutral-800"
+          <Input
+            className="p-2 rounded-md outline-none bg-transparent border border-primary text-xs"
             id="username"
             type="text"
             name="username"
@@ -80,7 +82,7 @@ function CreateAccount() {
               <Link to={"/login"}>Sign In</Link>
             </p>
           </div>
-          <button
+          <Button
             onClick={(e) => {
               e.preventDefault();
               handleSubmit();
@@ -88,7 +90,7 @@ function CreateAccount() {
             className="p-2 mt-2 rounded-md bg-neutral-800"
           >
             Create
-          </button>
+          </Button>
         </form>
       </div>
     </div>

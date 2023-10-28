@@ -50,11 +50,11 @@ function Upload() {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <div className="h-screen py-6 text-white">
-      <div className="px-4 ">
+    <div className=" py-6 text-white">
+      <div className="px-4 grid gap-5">
         <h2 className="text-2xl text-center">Upload a photo</h2>
 
-        <main className="flex flex-col h-full gap-10 pt-10">
+        <main className="flex flex-col gap-5">
           <section className="flex flex-col gap-3">
             {!file ? (
               <div className="w-full rounded-md h-[250px] bg-neutral-900 "></div>

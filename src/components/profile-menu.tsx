@@ -24,25 +24,33 @@ function ProfileMenu() {
 
   return (
     <div className="overflow-x-hidden">
-      <header className="flex items-center justify-between w-[95%] m-auto">
-        <button
+      <header className="flex items-center  justify-between text-primary  w-[95%] m-auto">
+        <Button
+          className="bg-transparent p-0"
           onClick={(e) => {
             e.preventDefault();
             navigate("/");
           }}
         >
-          <ChevronLeft strokeWidth={1} width={25} height={25} />
-        </button>
+          <ChevronLeft
+            className="text-primary"
+            strokeWidth={1.2}
+            width={25}
+            height={25}
+          />
+        </Button>
 
         <Sheet open={open} onOpenChange={(open) => setOpen(open)}>
-          <SheetTrigger onClick={() => setOpen(true)}>
-            <Settings width={20} height={20} strokeWidth={1} />
+          <SheetTrigger  onClick={() => setOpen(true)}>
+            <Button className="p-0 bg-transparent">
+              <Settings className="text-primary" width={20} height={20} strokeWidth={1.5} />
+            </Button>
           </SheetTrigger>
 
           <SheetContent>
             <div className="h-full">
               <div className="relative h-full">
-                <Link to={"/edit"} >
+                <Link to={"/edit"}>
                   <Button className="flex items-center text-primary bg-transparent mt-5 gap-2">
                     <Pencil width={18} height={18} strokeWidth={1} />
                     <span className="text-sm ml-1">Edit</span>
@@ -82,7 +90,7 @@ function ProfileMenu() {
       </header>
 
       {gettingOut && (
-        <div className="absolute w-full h-screen bg-secondary text-primary top-0 opacity-75">
+        <div className="absolute w-full z-50 h-screen bg-secondary text-primary top-0 opacity-75">
           <div className="flex items-center justify-center h-full ">
             <div className="bg-muted animate-pulse  p-6 rounded-md">
               <h2 className="text-center  text-sm">Getting Out...</h2>
