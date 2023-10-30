@@ -41,21 +41,27 @@ function ProfileMenu() {
         </Button>
 
         <Sheet open={open} onOpenChange={(open) => setOpen(open)}>
-          <SheetTrigger  onClick={() => setOpen(true)}>
-            <Button className="p-0 bg-transparent">
-              <Settings className="text-primary" width={20} height={20} strokeWidth={1.5} />
-            </Button>
-          </SheetTrigger>
+          <Button className="p-0 bg-transparent">
+            <SheetTrigger onClick={() => setOpen(true)}>
+              <Settings
+                className="text-primary"
+                width={20}
+                height={20}
+                strokeWidth={1.5}
+              />
+            </SheetTrigger>
+          </Button>
 
           <SheetContent>
             <div className="h-full">
               <div className="relative h-full">
-                <Link to={"/edit"}>
-                  <Button className="flex items-center text-primary bg-transparent mt-5 gap-2">
+                <Button className=" text-primary bg-transparent mt-5">
+                  <Link to={"/edit"} className="flex gap-2 items-center">
                     <Pencil width={18} height={18} strokeWidth={1} />
                     <span className="text-sm ml-1">Edit</span>
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
+
                 <ul className="absolute bottom-10 text-primary flex flex-col gap-5">
                   <li>
                     <Button

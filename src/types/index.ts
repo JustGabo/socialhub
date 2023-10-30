@@ -4,6 +4,7 @@ export type User = {
     bio: string;
     image: string;
     username: string;
+    followerName: string;
 }
 
 export type Posts = {
@@ -12,4 +13,15 @@ export type Posts = {
     posterId: string,
     caption: string,
     url: string,
+    posterImg: string,
+    posterUsername: string,
+
+}
+
+export interface Follower {
+    id: string;
+    created_at: string;
+    followerId: string
+    followingId: string 
+    followerName: string
 }

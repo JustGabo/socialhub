@@ -97,7 +97,8 @@ function Register() {
               e.preventDefault();
               handleSubmit();
             }}
-            className="p-2 mt-2 rounded-md bg-neutral-800"
+            disabled={usuario.email === "" || usuario.password === ""}
+            className="p-2 mt-2 rounded-md bg-muted text-white"
           >
             Sign Up
           </Button>

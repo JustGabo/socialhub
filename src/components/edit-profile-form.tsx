@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { supabase } from "../supabase/client";
 import { ChevronLeft, Pencil, Target, UserCircle2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
@@ -13,8 +13,8 @@ function EditProfileForm() {
   const [file, setFile] = useState<File | null>(null);
   const { user } = UseContext();
   const { account } = UsingAccountContext();
-  const [name, setName] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [name, setName] = useState<string>(() => account.username || "");
+  const [imageUrl, setImageUrl] = useState<string>(() => account.image || "");
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     // Do something with the files
@@ -23,20 +23,24 @@ function EditProfileForm() {
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
+  useEffect(() => {
+    if (!account) return;
+
+
+    setImageUrl(account.image || "");
+    setName(account.username || "");
+  }, [account]);
+
   // functions
 
-  const settingSupabase = async () => {
+  const settingSupabase = async (imageUrl: string) => {
     const res = await supabase
       .from("usuario")
-      .update({ username: name === "" || account.username, image: imageUrl })
+      .update({ username: name, image: imageUrl })
       .eq("id", user?.id);
     console.log(res);
   };
 
-  const testing = async () =>{
-    const res = await supabase.from('usuario').update({username: 'test'}).eq('id', user?.id)
-    console.log(res)
-  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -44,11 +48,13 @@ function EditProfileForm() {
   };
 
   const applyChanges = async () => {
-    await changingImage();
-    await settingSupabase();
+    const url = await changingImage();
+    await settingSupabase(url!);
   };
+
   const changingImage = async () => {
     if (!file) return;
+
     const { data, error } = await supabase.storage
       .from("images")
       .upload(`/profile/image_${user?.id}`, file, { upsert: true });
@@ -62,6 +68,8 @@ function EditProfileForm() {
     } = supabase.storage.from("images").getPublicUrl(data.path);
 
     setImageUrl(publicUrl);
+
+    return publicUrl;
 
     // const res = await supabase
     //   .from("usuario")
@@ -80,7 +88,7 @@ function EditProfileForm() {
       <h2 className="text-2xl text-center font-light">Edit Profile</h2>
       <section className="flex items-center flex-col justify-center gap-2">
         {account.image ? (
-          <div className="bg-red-300">
+          <div className="">
             <img
               className="w-[25%] rounded-full m-auto aspect-square object-cover"
               src={account.image}
@@ -116,6 +124,7 @@ function EditProfileForm() {
             Username
           </label>
           <Input
+            value={name}
             onChange={(e) => {
               handleChange(e);
             }}
@@ -123,13 +132,12 @@ function EditProfileForm() {
             autoComplete="off"
             id="username"
             type="text"
-            placeholder={account.username || undefined}
+            placeholder={'Change username'}
           />
           <Button
             onClick={(e) => {
               e.preventDefault();
               applyChanges();
-            testing()
             }}
             className={` ${
               name == "" && file == null ? "bg-neutral-700" : "bg-blue-600"

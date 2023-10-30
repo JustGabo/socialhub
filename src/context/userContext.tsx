@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "../supabase/client";
 import { User } from "@supabase/supabase-js";
 
+
 interface UserContextProps {
   children: React.ReactNode;
 }

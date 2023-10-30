@@ -28,17 +28,17 @@ function UserPagePosts() {
   }, []);
 
   return (
-    <div className="border-t border-muted text-primary pt-5">
+    <div className="border-t border-muted text-primary pt-3 px-1">
       <main className="pt-2 ">
         {posts.length == 0 ? (
           <div className="flex items-center justify-center pt-28">
             <h1 className="">This user hasn't post yet</h1>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-1">
+          <div  className="grid grid-cols-3 gap-1">
             {posts?.map((post) => {
               return (
-                <div key={post.id}>
+                <div  key={post.id}>
                   <img
                     className="aspect-square object-cover"
                     src={post.url}

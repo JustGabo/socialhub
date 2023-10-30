@@ -87,7 +87,8 @@ function CreateAccount() {
               e.preventDefault();
               handleSubmit();
             }}
-            className="p-2 mt-2 rounded-md bg-neutral-800"
+            disabled={username === ""}
+            className="p-2 mt-2 rounded-md bg-muted text-white"
           >
             Create
           </Button>

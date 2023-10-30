@@ -83,14 +83,15 @@ function Login() {
               e.preventDefault();
               handleSubmit();
             }}
-            className="p-2 mt-2 rounded-md bg-neutral-800"
+            disabled={usuario.email === "" || usuario.password === ""}
+            className="p-2 mt-2 rounded-md outline-none bg-muted text-white"
           >
             Sign In
           </Button>
         </form>
       </div>
     </div>
-  );
+ ) ;
 }
 
 export default Login;

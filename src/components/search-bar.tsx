@@ -2,7 +2,7 @@ import { ChevronLeft, UserCircle2 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
 import { useNavigate } from "react-router-dom";
-import {Input} from '../components/ui/input'
+import { Input } from "../components/ui/input";
 
 interface Usuario {
   id: string;
@@ -21,11 +21,16 @@ function SearchBar() {
   const [users, setUsers] = useState<Usuario[] | null>(null);
   const [filteredUsers, setFilteredUsers] = useState<Usuario[]>([]);
   const navigate = useNavigate();
+  const [input, setInput] = useState<String | null>(null);
 
   // functions
   const searchUser = async () => {
     const res = await supabase.from("usuario").select();
     setUsers(res.data);
+  };
+
+  const settingInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
   };
 
   const search = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,14 +54,14 @@ function SearchBar() {
   }, []);
 
   return (
-    <div className="relative h-screen px-4 py-6">
+    <div className="relative h-screen px-4 py-6 text-primary">
       <form action="" className="flex items-center gap-2 mb-5">
         <button
           onClick={() => {
             setActive(false);
             setBackActive(false);
           }}
-          className={`${backActive ? "flex" : "hidden"}  `}
+          className={`${backActive ? "flex" : "hidden"}  text-primary`}
         >
           <ChevronLeft />
         </button>
@@ -67,8 +72,9 @@ function SearchBar() {
           }}
           onChange={(e) => {
             search(e);
+            settingInputValue(e);
           }}
-          className="w-full p-2 text-xs border-neutral-500 rounded-lg outline-none bg-neutral-800"
+          className="w-full p-2 text-xs  shadow-xl rounded-lg outline-none "
           type="text"
           placeholder="search account"
         />
@@ -77,23 +83,28 @@ function SearchBar() {
       <main
         className={`${
           active ? "flex" : "hidden"
-        } mt-3 h-[90%]  absolute w-[92%]`}
+        } mt-3 h-[90%]  absolute w-[92%] `}
       >
         <div className="w-full h-full ">
-          <div className="h-[90%] w-full overflow-y-scroll">
+          <div className="h-[90%] w-full flex flex-col gap-2 overflow-y-scroll">
             {filteredUsers?.map((user: Usuario, i: number) => {
               return (
                 <div
+                  className="border rounded-lg border-primary/15 shadow-lg flex items-center"
                   key={i}
                   onClick={(e) => {
                     e.preventDefault();
                     navigate(`/userdetails/${user.username}`);
                   }}
                 >
-                  <div className="h-[70px]  mb-3 px-4 text-xs  flex gap-3 items-center">
-                    <div>
+                  <div className="h-[70px] px-4 text-xs  flex gap-3 items-center">
+                    <div className="flex items-center">
                       {user.image ? (
-                        <img src={user.image} alt="" />
+                        <img
+                          className="w-12 aspect-square object-cover rounded-full border border-primary"
+                          src={user.image}
+                          alt=""
+                        />
                       ) : (
                         <UserCircle2
                           width="50px"
@@ -108,11 +119,16 @@ function SearchBar() {
               );
             })}
 
-            {filteredUsers?.length == 0 && (
-              <p className="text-gray-500">
-                Start typing to search for an account.
+            {input == null ? (
+              <p className="text-gray-500 text-sm">
+                Start typing to search for an account
               </p>
-            )}
+            ) : filteredUsers?.length == 0 && input !== "" ? (
+              <p className="text-gray-500 text-sm">
+                No user found with the name{" "}
+                <span className="font-medium text-primary">{input}</span>
+              </p>
+            ) : null}
           </div>
         </div>
       </main>

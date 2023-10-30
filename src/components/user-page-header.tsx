@@ -3,15 +3,17 @@ import { UsingAccountContext } from "../context/accountContext";
 import { useNavigate } from "react-router-dom";
 import { UseContext } from "../context/userContext";
 import { UsingFollowContext } from "../context/followContext";
-import { UserCircle2 } from "lucide-react";
+import { ChevronLeft, UserCircle2 } from "lucide-react";
 import { supabase } from "../supabase/client";
+import { Posts } from "../types/index";
+import {Link} from 'react-router-dom'
 
 function UserPageHeader() {
   // usages
   const { account } = UsingAccountContext();
   const { user } = UseContext();
   const { followers, following } = UsingFollowContext();
-  const [posts, setPosts] = useState(0);
+  const [posts, setPosts] = useState<Posts[] | null>(null);
   const navigate = useNavigate();
 
   // functions
@@ -23,12 +25,16 @@ function UserPageHeader() {
   };
 
   const getPost = async () => {
-    const { count } = await supabase
+    const res = await supabase
       .from("posts")
-      .select("*", { count: "exact", head: true })
+      .select("*")
       .eq("posterId", user?.id);
+    // const { count } = await supabase
+    //   .from("posts")
+    //   .select("*", { count: "exact", head: true })
+    //   .eq("posterId", user?.id);
 
-    setPosts(count || 0);
+    setPosts(res.data);
   };
 
   // useeffects
@@ -45,7 +51,7 @@ function UserPageHeader() {
           <header className="flex flex-col items-center gap-3">
             {account.image ? (
               <img
-                className="w-[25%] aspect-square object-cover rounded-full"
+                className="w-[25%] aspect-square border border-primary object-cover rounded-full"
                 src={account.image}
                 alt=""
               />
@@ -61,7 +67,7 @@ function UserPageHeader() {
               </div>
               <div className="text-center font-light">
                 <h3 className="text-sm">Post</h3>
-                <p className="text-xs">{posts}</p>
+                <p className="text-xs">{posts?.length}</p>
               </div>
 
               <div className="text-center font-light">
@@ -74,6 +80,8 @@ function UserPageHeader() {
       ) : (
         <h2>Waiting</h2>
       )}
+
+
     </div>
   );
 }

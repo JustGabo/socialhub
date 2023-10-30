@@ -5,14 +5,26 @@ import { supabase } from "../supabase/client";
 import { UseContext } from "../context/userContext";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
+import { UsingAccountContext } from "../context/accountContext";
+import { useNavigate } from "react-router-dom";
 
 function Upload() {
   // states and usses
   const [file, setFile] = useState<File | null>(null);
   const { user } = UseContext();
+  const { account } = UsingAccountContext();
   const [caption, setCaption] = useState("");
+  const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
 
   // functions and fetchs
+
+  const activatingModal = () => {
+    setTimeout(() => {
+      setModal(false);
+      navigate("/");
+    }, 2000);
+  };
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     // Do something with the files
@@ -29,7 +41,7 @@ function Upload() {
     // path - path
     const { data, error } = await supabase.storage
       .from("images")
-      .upload(`img-${Date.now ()}`, file);
+      .upload(`img-${Date.now()}`, file);
 
     if (error) {
       console.log(error);
@@ -40,17 +52,26 @@ function Upload() {
       data: { publicUrl },
     } = supabase.storage.from("images").getPublicUrl(data?.path);
 
-    const res = await supabase
-      .from("posts")
-      .insert({ url: publicUrl, posterId: user?.id, caption });
-    
-      console.log(res);
+    const res = await supabase.from("posts").insert({
+      url: publicUrl,
+      posterId: user?.id,
+      caption,
+      posterImg: account?.image,
+      posterUsername: account?.username,
+    });
+
+    if (res.status === 201) {
+      setModal(true);
+      activatingModal();
+    }
+
+    console.log(res);
   };
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <div className=" py-6 text-white">
+    <div className=" py-6 text-primary">
       <div className="px-4 grid gap-5">
         <h2 className="text-2xl text-center">Upload a photo</h2>
 
@@ -82,7 +103,7 @@ function Upload() {
               <Input
                 onChange={(e) => settingCaption(e)}
                 type="text"
-                className="px-4 py-2 text-sm bg-transparent border rounded-md outline-none border-neutral-700"
+                className="px-4 py-2 text-sm bg-transparent border rounded-md outline-none border-primary/25 placeholder:text-xs"
                 placeholder="Write something"
               />
               <Button
@@ -97,6 +118,14 @@ function Upload() {
             </form>
           </section>
         </main>
+
+        <div
+          className={`shadow-lg p-4 absolute bottom-44 ${
+            modal ? "opacity-100" : "opacity-0"
+          } border transition-all duration-1000 border-primary/25 text-xs bg-secondary rounded-md right-0 z-10`}
+        >
+          Your photo was uploaded successfully
+        </div>
       </div>
       <BottomBar />
     </div>

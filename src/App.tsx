@@ -18,6 +18,7 @@ import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import CreateAccountPage from "./pages/create-account";
 import UploadPage from './pages/upload'
+import WatchPage from './pages/watching-pics'
 import UserDetailsPage from './pages/userDetails'
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/upload" element={<UploadPage />} />
                 <Route path="/userdetails/:username" element={<UserDetailsPage />} />
                 <Route path="/edit" element={<EditPage />} />
+                <Route path="/watch" element={<WatchPage />} />
               </Routes>
             </div>
           </div>
