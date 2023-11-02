@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
 import { Posts } from "../types/index";
 import { UserCircle2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const getRelativeTime = (date: string) => {
   const currentDate = new Date(date);
@@ -14,9 +15,9 @@ const getRelativeTime = (date: string) => {
   const week = day * 7;
 
   if (diff < hour) {
-    return relativeTime.format(Math.ceil(diff / 1000 / 60), "minutes");
+    return relativeTime.format(Math.ceil(diff / 1000 / 60 / 60), "minutes");
   } else if (diff < day) {
-    return relativeTime.format(Math.ceil(diff / 1000 / 60 / 60), "hours");
+    return relativeTime.format(Math.ceil(diff / hour), "hours");
   } else if (diff < week) {
     return relativeTime.format(Math.ceil(diff / day), "days");
   } else {
@@ -68,13 +69,16 @@ function HomePosts() {
               src={post.url}
               alt=""
             />
-            <div className="flex items-center gap-1">
-              <h3 className="text-sm">{post.posterUsername}:</h3>
-              <p className="text-xs font-light">{post.caption}</p>
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm leading-none">{post.posterUsername} :</h3>
+              <p className="text-xs font-light leading-normal ">
+                {post.caption}
+              </p>
               <small className="ml-auto">
                 {getRelativeTime(post.created_at)}
               </small>
             </div>
+            <Link className="text-xs text-muted" to={`/post/comments/${post.id}`}>View Comments</Link>
           </div>
         );
       })}

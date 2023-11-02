@@ -5,14 +5,14 @@ import { supabase } from "../supabase/client";
 import { UseContext } from "../context/userContext";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { UsingAccountContext } from "../context/accountContext";
+// import { UsingAccountContext } from "../context/accountContext";
 import { useNavigate } from "react-router-dom";
 
 function Upload() {
   // states and usses
   const [file, setFile] = useState<File | null>(null);
   const { user } = UseContext();
-  const { account } = UsingAccountContext();
+  // const { account } = UsingAccountContext();
   const [caption, setCaption] = useState("");
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
@@ -56,8 +56,6 @@ function Upload() {
       url: publicUrl,
       posterId: user?.id,
       caption,
-      posterImg: account?.image,
-      posterUsername: account?.username,
     });
 
     if (res.status === 201) {

@@ -1,34 +1,35 @@
-import React, {useState, useEffect} from "react";
-import {Link} from 'react-router-dom'
-import { ChevronLeft, UserCircle2 } from "lucide-react";
-import { Posts } from "../types/index";
-import {UseContext} from '../context/userContext'
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import { supabase } from "../supabase/client";
+import { useState } from "react";
+import { Posts } from "../types/index";
 
+interface Props {
+  id: string;
+}
 
-function WatchPhoto() {
-    // usages
-    const {user} = UseContext()
-  const [posts, setPosts] = useState<Posts[] | null>([]);
+function WatchPhoto({ id }: Props) {
+  // usages
+  const [posts, setPosts] = useState<Posts[] | null>(null);
 
-//   functions
+  //   functions
   const getPost = async () => {
-    const res = await supabase
-      .from("posts")
-      .select("*")
-      .eq("posterId", user?.id);
+    const { data } = await supabase.from("posts").select("*").eq("id", id);
     // const { count } = await supabase
     //   .from("posts")
     //   .select("*", { count: "exact", head: true })
     //   .eq("posterId", user?.id);
 
-    setPosts(res.data);
+    if (data) {
+      setPosts(data ?? []);
+    }
   };
 
-//   useeffects
-useEffect(()=>{
-getPost()
-},[])
+  //   useeffects
+  useEffect(() => {
+    getPost();
+  }, []);
 
   return (
     <div>
@@ -39,40 +40,24 @@ getPost()
           </Link>
           <p>Posts</p>
         </header>
-        <div className="grid gap-10 pb-20">
-          {posts?.map((post:Posts) => {
+        <div className="">
+          {posts?.map((post) => {
             return (
-              <div className="flex flex-col gap-2" key={post.id}>
-                <div className="flex items-center gap-2">
-                  {post.posterImg ? (
-                    <img
-                      className="w-8 h-8 rounded-full"
-                      src={post.posterImg}
-                      alt=""
-                    />
-                  ) : (
-                    <UserCircle2
-                      strokeWidth={1}
-                      className="w-5 font-light h-5 rounded-full"
-                    />
-                  )}
-                  <span className="text-xs font-medium">
-                    {post.posterUsername}
-                  </span>
-                </div>
-
+              <div key={post.id} className="flex flex-col gap-2">
                 <img
                   className="min-h-max rounded-md w-full object-fill"
                   src={post.url}
                   alt=""
                 />
-                <div className="flex items-center gap-1">
-                  <h3 className="text-sm">{post.posterUsername}:</h3>
-                  <p className="text-xs font-light">{post.caption}</p>
-                  {/* <small className="ml-auto">
-                {getRelativeTime(post.created_at)}
-              </small> */}
-                </div>
+                <p className="text-xs font-light leading-normal">
+                  {post.caption}
+                </p>
+                <Link
+                  className="text-xs text-muted"
+                  to={`/post/comments/${post.id}`}
+                >
+                  View Comments
+                </Link>
               </div>
             );
           })}

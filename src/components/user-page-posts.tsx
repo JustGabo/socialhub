@@ -2,10 +2,10 @@ import { supabase } from "../supabase/client";
 import { UseContext } from "../context/userContext";
 import { useState, useEffect } from "react";
 import { Posts } from "../types/index";
+import {Link} from 'react-router-dom'
 
 function UserPagePosts() {
   const { user } = UseContext();
-
   const [posts, setPosts] = useState<Posts[]>([]);
 
   // functions
@@ -38,13 +38,13 @@ function UserPagePosts() {
           <div  className="grid grid-cols-3 gap-1">
             {posts?.map((post) => {
               return (
-                <div  key={post.id}>
+                <Link to={`/watch/${post.id}`} key={post.id}>
                   <img
                     className="aspect-square object-cover"
                     src={post.url}
                     alt=""
                   />
-                </div>
+                </Link>
               );
             })}
           </div>

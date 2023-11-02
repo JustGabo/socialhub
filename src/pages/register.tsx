@@ -25,7 +25,7 @@ function Register() {
       password: usuario.password,
       options: {
         data: {
-          name: usuario.namee,
+          name: usuario.namee
         },
       },
     });

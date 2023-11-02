@@ -1,8 +1,5 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import {supabase} from './supabase/client'
-import {useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
 
 //importing context
 import UserProvider from "./context/userContext";
@@ -20,10 +17,11 @@ import CreateAccountPage from "./pages/create-account";
 import UploadPage from './pages/upload'
 import WatchPage from './pages/watching-pics'
 import UserDetailsPage from './pages/userDetails'
+import CommentsPage from './pages/comments'
 
 function App() {
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
 
   return (
@@ -44,7 +42,8 @@ function App() {
                 <Route path="/upload" element={<UploadPage />} />
                 <Route path="/userdetails/:username" element={<UserDetailsPage />} />
                 <Route path="/edit" element={<EditPage />} />
-                <Route path="/watch" element={<WatchPage />} />
+                <Route path="/watch/:id" element={<WatchPage />} />
+                <Route path="post/comments/:id" element={<CommentsPage />} />
               </Routes>
             </div>
           </div>

@@ -25,3 +25,10 @@ export interface Follower {
     followingId: string 
     followerName: string
 }
+
+export interface Comment{
+    id: number;
+    postComment: number;
+    posterId: string 
+    content: string;
+}

@@ -1,12 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { UsingAccountContext } from "../context/accountContext";
 import { useNavigate } from "react-router-dom";
 import { UseContext } from "../context/userContext";
 import { UsingFollowContext } from "../context/followContext";
-import { ChevronLeft, UserCircle2 } from "lucide-react";
+import {  UserCircle2 } from "lucide-react";
 import { supabase } from "../supabase/client";
 import { Posts } from "../types/index";
-import {Link} from 'react-router-dom'
 
 function UserPageHeader() {
   // usages
@@ -42,6 +41,7 @@ function UserPageHeader() {
   useEffect(() => {
     redirect();
     getPost();
+    console.log(account)
   }, [user]);
 
   return (
