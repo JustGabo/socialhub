@@ -1,4 +1,3 @@
-import React from "react";
 import { Posts } from "../types/index";
 import { UserCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";

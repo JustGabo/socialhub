@@ -1,4 +1,3 @@
-import React from 'react'
 import WatchPics from '../components/watch-photo'
 import { useParams } from 'react-router-dom'
 

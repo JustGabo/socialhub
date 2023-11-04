@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { supabase } from "../supabase/client";
-import { ChevronLeft, Pencil, Target, UserCircle2 } from "lucide-react";
+import { ChevronLeft, Pencil, UserCircle2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { UseContext } from "../context/userContext";
 import { Link } from "react-router-dom";
@@ -38,13 +38,12 @@ function EditProfileForm() {
       .from("usuario")
       .update({ username: name, image: imageUrl })
       .eq("id", user?.id);
-    console.log(res);
+      return res
   };
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
-    console.log(e.target.value);
   };
 
   const applyChanges = async () => {
@@ -87,11 +86,11 @@ function EditProfileForm() {
       </div>
       <h2 className="text-2xl text-center font-light">Edit Profile</h2>
       <section className="flex items-center flex-col justify-center gap-2">
-        {account.image ? (
+        {imageUrl ? (
           <div className="">
             <img
               className="w-[25%] rounded-full m-auto aspect-square object-cover"
-              src={account.image}
+              src={imageUrl}
             />
           </div>
         ) : (

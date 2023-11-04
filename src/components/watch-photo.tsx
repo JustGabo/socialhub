@@ -1,9 +1,8 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import {useState, useEffect} from "react";
+import {Link} from 'react-router-dom'
 import { ChevronLeft } from "lucide-react";
-import { supabase } from "../supabase/client";
-import { useState } from "react";
 import { Posts } from "../types/index";
+import { supabase } from "../supabase/client";
 
 interface Props {
   id: string;

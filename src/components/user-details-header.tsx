@@ -64,11 +64,11 @@ function UserDetailsHeader() {
     setPosts(res.data);
   };
 
-  const ProvingIfFollowing = ()=>{
-    const following = followers?.find((follower)=> follower.id === user?.id)
-    if(following) return true
-    return false
-  }
+  // const ProvingIfFollowing = ()=>{
+  //   const following = followers?.find((follower)=> follower.id === user?.id)
+  //   if(following) return true
+  //   return false
+  // }
 
   // useeffect
 

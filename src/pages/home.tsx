@@ -21,7 +21,7 @@ function Home() {
   }, [user]);
 
   return (
-    <div className="py-6 text-primary">
+    <div className="py-6 text-primary bg-secondary">
       <main className="px-4 mb-10">
         <div className="py-5">
           <h1 className="text-3xl font-bold">SocialHub</h1>
