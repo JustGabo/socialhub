@@ -34,8 +34,9 @@ function UserContextProvider({ children }: UserContextProps) {
   };
 
 
+
   const checkingUser = async () => {
-    await supabase.auth.onAuthStateChange((event,session) => {
+     supabase.auth.onAuthStateChange((event,session) => {
       if (event === "SIGNED_IN") {
         usuario();
       }else if (!session){

@@ -24,6 +24,7 @@ export interface Follower {
     followerId: string
     followingId: string 
     followerName: string
+    followerImg: string
 }
 
 export interface Comment{
@@ -31,4 +32,5 @@ export interface Comment{
     postComment: number;
     posterId: string 
     content: string;
+    posterName: string;
 }

@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { supabase } from "../supabase/client";
 import { Comment } from "../types/index";
 import { UseContext } from "../context/userContext";
+import {UsingAccountContext} from '../context/accountContext'
 
 const Comments = () => {
   // usages
@@ -13,17 +14,21 @@ const Comments = () => {
   const { user } = UseContext();
   const [comment, setComment] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState<string>("");
+  const {account} = UsingAccountContext()
 
   // functions
   const gettingComments = async () => {
     const { data } = await supabase
       .from("comments")
-      .select("*")
+      .select("*",)
       .eq("postComment", id);
+      
     if (data) {
       setComment(data);
     }
   };
+
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommentInput(e.target.value);
@@ -32,7 +37,7 @@ const Comments = () => {
   const handleSubmit = async () => {
     const res = await supabase
       .from("comments")
-      .insert([{ content: commentInput, postComment: id, posterId: user?.id }]);
+      .insert([{ content: commentInput, postComment: id, posterId: user?.id, posterName: account.username}]);
       if(res.status === 201){
         setCommentInput('')
         gettingComments()
@@ -42,8 +47,6 @@ const Comments = () => {
   // useeffects
   useEffect(() => {
     gettingComments();
-    console.log(comment);
-    console.log(user);
   }, []);
 
   return (
@@ -63,8 +66,8 @@ const Comments = () => {
             {comment.map((comment) => {
               return (
                 <div key={comment.id} className="flex items-center gap-1">
-                  <h3 className="font-medium leading-none">Persona :</h3>
-                  <p className="text-sm font-light leading-none">
+                  <h3 className="font-medium text-sm leading-none ">{comment.posterName}:</h3>
+                  <p className="text-xs font-light leading-3 flex items-center">
                     {comment.content}
                   </p>
                 </div>

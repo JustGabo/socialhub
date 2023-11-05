@@ -41,7 +41,6 @@ function UserPageHeader() {
   useEffect(() => {
     redirect();
     getPost();
-    console.log(account)
   }, [user]);
 
   return (

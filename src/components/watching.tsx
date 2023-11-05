@@ -7,7 +7,7 @@ function Watching(post: Posts) {
   return (
     <div className="absolute w-full h-screen p-4 bg-secondary top-0 pt-14">
       <header className="flex items-center gap-2 mb-5 bg-secondary border-b border-primary/25 fixed top-0 w-full ring-0 left-0 p-3">
-        <Link to={"/profile"}>
+        <Link to={"/"}>
           <ChevronLeft className="w-6 h-6 text-primary" />
         </Link>
         <p>Posts</p>

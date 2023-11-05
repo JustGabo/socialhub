@@ -1,7 +1,7 @@
 import { ChevronLeft, UserCircle2 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../components/ui/input";
 
 interface Usuario {
@@ -87,35 +87,35 @@ function SearchBar() {
       >
         <div className="w-full h-full ">
           <div className="h-[90%] w-full flex flex-col gap-2 overflow-y-scroll">
-            {filteredUsers?.map((user: Usuario, i: number) => {
+            {filteredUsers?.map((user: Usuario) => {
               return (
-                <div
-                  className="border rounded-lg border-primary/15 shadow-lg flex items-center"
-                  key={i}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate(`/userdetails/${user.username}`);
-                  }}
-                >
-                  <div className="h-[70px] px-4 text-xs  flex gap-3 items-center">
-                    <div className="flex items-center">
-                      {user.image ? (
-                        <img
-                          className="w-12 aspect-square object-cover rounded-full border border-primary"
-                          src={user.image}
-                          alt=""
-                        />
-                      ) : (
-                        <UserCircle2
-                          width="50px"
-                          height="50px"
-                          strokeWidth={0.5}
-                        />
-                      )}
+                  <div
+                    className="border rounded-lg border-primary/20 shadow-lg flex items-center"
+                    key={user.id}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(`/userdetails/${user.username}`);
+                    }}
+                  >
+                    <div className="h-[70px] px-4 text-xs  flex gap-3 items-center">
+                      <div className="flex items-center">
+                        {user.image ? (
+                          <img
+                            className="w-12 aspect-square object-cover rounded-full border border-primary"
+                            src={user.image}
+                            alt=""
+                          />
+                        ) : (
+                          <UserCircle2
+                            width="50px"
+                            height="50px"
+                            strokeWidth={0.5}
+                          />
+                        )}
+                      </div>
+                      <h2>{user.username}</h2>
                     </div>
-                    <h2>{user.username}</h2>
                   </div>
-                </div>
               );
             })}
 

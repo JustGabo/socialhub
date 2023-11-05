@@ -24,7 +24,7 @@ function ProfileMenu() {
   return (
     <div className="overflow-x-hidden">
       <header className="flex items-center  justify-between text-primary  w-[95%] m-auto">
-        <Button
+        <button
           className="bg-transparent p-0"
           onClick={(e) => {
             e.preventDefault();
@@ -37,7 +37,7 @@ function ProfileMenu() {
             width={25}
             height={25}
           />
-        </Button>
+        </button>
 
         <Sheet open={open} onOpenChange={(open) => setOpen(open)}>
           <Button className="p-0 bg-transparent">
@@ -100,10 +100,10 @@ function ProfileMenu() {
       </header>
 
       {gettingOut && (
-        <div className="absolute w-full z-50 h-screen bg-secondary text-primary top-0 opacity-75">
+        <div className="absolute w-full z-50 h-screen bg-secondary text-primary top-0 opacity-95">
           <div className="flex items-center justify-center h-full ">
-            <div className="bg-muted animate-pulse  p-6 rounded-md">
-              <h2 className="text-center  text-sm">Getting Out...</h2>
+            <div className="bg-primary animate-pulse  p-6 rounded-md">
+              <h2 className="text-center text-secondary text-sm">Getting Out...</h2>
             </div>
           </div>
         </div>

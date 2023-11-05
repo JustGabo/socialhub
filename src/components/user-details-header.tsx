@@ -5,21 +5,24 @@ import type { User } from "../types";
 import { UseContext } from "../context/userContext";
 import { UserCircle2 } from "lucide-react";
 import { Posts } from "../types/index";
-import {Button} from '../components/ui/button'
-import {UsingAccountContext} from '../context/accountContext'
+import { Button } from "../components/ui/button";
+import { UsingAccountContext } from "../context/accountContext";
+import { Follower } from "../types/index";
+import { Link } from "react-router-dom";
 
 function UserDetailsHeader() {
   const { username } = useParams();
-  const { account: UserAccount } = UsingAccountContext()
+  const { account: UserAccount } = UsingAccountContext();
   const { user } = UseContext();
 
   // states
 
   const [account, setAccount] = useState<User | null>(null);
-  const [followers, setFollowers] = useState<User[] | null>(null);
-  const [following, setFollowing] = useState<User[] | null>(null);
+  const [followers, setFollowers] = useState<Follower[] | null>(null);
+  const [following, setFollowing] = useState<Follower[] | null>(null);
   const [posts, setPosts] = useState<Posts[] | null>([]);
   const [load, setLoad] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   // functions and fetchs
 
@@ -30,7 +33,7 @@ function UserDetailsHeader() {
       .eq("username", username)
       .single();
     setAccount(data);
-    setLoad(true)
+    setLoad(true);
   };
 
   const gettingFollow = async () => {
@@ -42,18 +45,34 @@ function UserDetailsHeader() {
       .from("follow")
       .select()
       .eq("followingId", account?.id);
-    console.log(following);
-    console.log(followers);
 
     setFollowing(following.data ?? []);
     setFollowers(followers.data ?? []);
   };
 
   const follow = async () => {
+    const res = await supabase.from("follow").insert({
+      followerId: user?.id,
+      followingId: account?.id,
+      followerName: UserAccount.username,
+    });
+    if (res.status == 201) {
+      setIsFollowing(true);
+      gettingFollow();
+    }
+    return res;
+  };
+
+  const stopFollow = async () => {
     const res = await supabase
       .from("follow")
-      .insert({ followerId: user?.id, followingId: account?.id, followerName: UserAccount.username });
-    return res;
+      .delete()
+      .eq("followerId", user?.id)
+      .eq("followingId", account?.id);
+    if (res.status == 204) {
+      setIsFollowing(false);
+      gettingFollow();
+    }
   };
 
   const getPost = async () => {
@@ -64,26 +83,39 @@ function UserDetailsHeader() {
     setPosts(res.data);
   };
 
-  // const ProvingIfFollowing = ()=>{
-  //   const following = followers?.find((follower)=> follower.id === user?.id)
-  //   if(following) return true
-  //   return false
+  // const get = followers?.map((follower)=> {
+  // if(follower.followerId == user?.id){
+  //   return setIsFollowing(true)
   // }
-
-  // useeffect
+  // })
+  const checkingIsFollowing = () => {
+    followers?.map((follower) => {
+      if (follower.followerId == user?.id) {
+        setIsFollowing(true);
+        console.log('you are following')
+      } else {
+        setIsFollowing(false);
+        console.log("you are not following");
+      }
+    });
+  };
 
   useEffect(() => {
     gettingAccount();
-
   }, []);
 
-  useEffect(()=>{
-    if(load){
+  useEffect(() => {
+    if (followers) {
+      checkingIsFollowing();
+    }
+  }, [followers]);
+
+  useEffect(() => {
+    if (load) {
       gettingFollow();
       getPost();
-      console.log(account)
-    } 
-  },[load])
+    }
+  }, [load]);
 
   return (
     <div className="py-5 text-primary flex flex-col gap-5">
@@ -101,10 +133,10 @@ function UserDetailsHeader() {
 
         <h2>{account?.username}</h2>
         <div className="flex justify-between w-[75%]">
-          <div className="text-center">
+          <Link to={`/watchfollowers/${account?.id}`} className="text-center">
             <h3 className="text-sm">Followers</h3>
-            <p className="text-xs">{followers?.length}</p>
-          </div>
+            <p  className="text-xs">{followers?.length}</p>
+          </Link>
           <div className="text-center">
             <h3 className="text-sm ">Post</h3>
             <p className="text-xs">{posts?.length}</p>
@@ -118,15 +150,27 @@ function UserDetailsHeader() {
       </header>
 
       <div className="w-full px-4">
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            follow();
-          }}
-          className="w-full bg-blue-500 h-[40px] rounded-md text-sm"
-        >
-          Follow
-        </Button>
+        {!isFollowing ? (
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              follow();
+            }}
+            className="bg-blue-500 w-full h-[40px] rounded-md text-sm"
+          >
+            Follow
+          </Button>
+        ) : (
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              stopFollow();
+            }}
+            className="w-full bg-muted h-[40px] rounded-md text-sm"
+          >
+            Following
+          </Button>
+        )}
       </div>
 
       <div className="border-t border-muted w-full text-primary py-4 px-2">
@@ -140,19 +184,19 @@ function UserDetailsHeader() {
               {posts?.map((post) => {
                 return (
                   <div key={post.id}>
-                    <img
-                      className="aspect-square object-cover"
-                      src={post.url}
-                      alt=""
-                    />
+                    <Link to={`/watch/${post.id}`}>
+                      <img
+                        className="aspect-square object-cover"
+                        src={post.url}
+                        alt=""
+                      />
+                    </Link>
                   </div>
                 );
               })}
             </div>
           )}
         </main>
-
-
       </div>
     </div>
   );

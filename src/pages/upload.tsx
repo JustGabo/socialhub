@@ -7,6 +7,7 @@ import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 // import { UsingAccountContext } from "../context/accountContext";
 import { useNavigate } from "react-router-dom";
+import {UsingAccountContext} from '../context/accountContext'
 
 function Upload() {
   // states and usses
@@ -16,6 +17,7 @@ function Upload() {
   const [caption, setCaption] = useState("");
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
+  const {account} = UsingAccountContext()
 
   // functions and fetchs
 
@@ -56,14 +58,14 @@ function Upload() {
       url: publicUrl,
       posterId: user?.id,
       caption,
+      posterUsername: account.username,
+      posterImg: account.image,
     });
 
     if (res.status === 201) {
       setModal(true);
       activatingModal();
     }
-
-    console.log(res);
   };
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
