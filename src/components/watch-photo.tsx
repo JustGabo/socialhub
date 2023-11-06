@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {Link} from 'react-router-dom'
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, UserCircle2 } from "lucide-react";
 import { Posts } from "../types/index";
 import { supabase } from "../supabase/client";
 
@@ -42,22 +42,35 @@ function WatchPhoto({ id }: Props) {
         <div className="">
           {posts?.map((post) => {
             return (
-              <div key={post.id} className="flex flex-col gap-2">
+              <main key={post.id} className="flex flex-col mt-6 gap-2">
+                <section className="flex items-center gap-2">
+                  {post.posterImg ?                   <img
+                    className="w-8 h-8 rounded-full object-cover"
+                    src={post.posterImg}
+                    alt=""
+                  /> : <UserCircle2 className="w-8 h-8 text-primary" />}
+
+                  <p className="text-xs">{post.posterUsername}</p>
+                  </section>
                 <img
                   className="min-h-max rounded-md w-full object-fill"
                   src={post.url}
                   alt=""
                 />
-                <p className="text-xs font-light leading-normal">
+                <section className="flex items-center gap-1">
+                  <h3 className="text-sm font-medium">{post.posterUsername}:</h3>
+                <p className="text-sm font-light leading-3  ">
                   {post.caption}
                 </p>
+                </section>
+
                 <Link
                   className="text-xs text-muted"
                   to={`/post/comments/${post.id}`}
                 >
                   View Comments
                 </Link>
-              </div>
+              </main>
             );
           })}
         </div>
