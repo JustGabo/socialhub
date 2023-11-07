@@ -34,3 +34,11 @@ export interface Comment{
     content: string;
     posterName: string;
 }
+
+export interface Like{
+    id: number;
+    likedPostId: number;
+    likerId: string;
+    likerName: string;
+    likerImg: string;
+}

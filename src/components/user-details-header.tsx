@@ -83,19 +83,12 @@ function UserDetailsHeader() {
     setPosts(res.data);
   };
 
-  // const get = followers?.map((follower)=> {
-  // if(follower.followerId == user?.id){
-  //   return setIsFollowing(true)
-  // }
-  // })
   const checkingIsFollowing = () => {
     followers?.map((follower) => {
       if (follower.followerId == user?.id) {
         setIsFollowing(true);
-        console.log('you are following')
       } else {
         setIsFollowing(false);
-        console.log("you are not following");
       }
     });
   };
@@ -142,10 +135,10 @@ function UserDetailsHeader() {
             <p className="text-xs">{posts?.length}</p>
           </div>
 
-          <Link to={`/watchfollowing/${account?.id}`} className="text-center">
+          <div className="text-center">
             <h3 className="text-sm">Following</h3>
             <p className="text-xs">{following?.length}</p>
-          </Link>
+          </div>
         </div>
       </header>
 

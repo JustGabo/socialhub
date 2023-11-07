@@ -1,6 +1,6 @@
 import { ChevronLeft, UserCircle2 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useParams, Link, Router } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { supabase } from "../supabase/client";
 import { Follower } from "../types/index";
 

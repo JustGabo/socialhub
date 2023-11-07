@@ -4,12 +4,12 @@ import { Posts } from "../types/index";
 import { UserCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
+
 const getRelativeTime = (date: string) => {
   const currentDate = new Date(date);
   const relativeTime = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
 
   const diff = currentDate.getTime() - Date.now();
-
 
   const hour = 1000 * 60 * 60;
   const day = 1000 * 60 * 60 * 24;
@@ -46,15 +46,39 @@ const getRelativeTime = (date: string) => {
 function HomePosts() {
   // usages
   const [posts, setPosts] = useState<Posts[] | null>(null);
+  // const [likes, setLikes] = useState<Like[]>([]);
 
   // functions
   const gettingPosts = async () => {
     const res = await supabase
       .from("posts")
-      .select("*")
+      .select(`*`)
       .order("id", { ascending: false });
     setPosts(res.data);
   };
+
+  // const likingPost = async (id: number) => {
+  //   const res = await supabase.from("likes").insert({
+  //     likedPostId: id,
+  //     likerId: user?.id,
+  //     likerName: account?.username,
+  //     likerImg: account?.image,
+  //   });
+  //   console.log(res);
+  // };
+
+  // const unlikingPost = async (id: number) => {
+  //   const res = await supabase.from("likes").delete().match({
+  //     likedPostId: id,
+  //     likerId: user?.id,
+  //   });
+  //   console.log(res);
+  // };
+
+  // const gettingLikes = async (id: number) => {
+  //   const res = await supabase.from("likes").select("*").eq("likedPostId", id);
+  //   console.log(res);
+  // };
 
   // useeffects
   useEffect(() => {
@@ -65,7 +89,7 @@ function HomePosts() {
     <div className="grid gap-10 w-[95%] m-auto mb-10">
       {posts?.map((post) => {
         return (
-          <div className="flex flex-col gap-2" key={post.id}>
+          <div className="flex flex-col gap-3" key={post.id}>
             <div className="flex items-center gap-2">
               {post.posterImg ? (
                 <img
@@ -79,7 +103,11 @@ function HomePosts() {
                   className="w-5 font-light h-5 rounded-full"
                 />
               )}
-              <span className="text-xs font-medium">{post.posterUsername}</span>
+              <Link to={`/userdetails/${post.posterUsername}`}>
+                <span className="text-xs font-medium">
+                  {post.posterUsername}
+                </span>
+              </Link>
             </div>
 
             <img
@@ -87,6 +115,17 @@ function HomePosts() {
               src={post.url}
               alt=""
             />
+            {/* <div className="flex items-center gap-1">
+              <Button
+                className="bg-transparent text-primary p-0 h-min"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // likingPost(post.id);
+                }}
+              >
+                <HeartIcon className="w-5 h-5" />
+              </Button>
+            </div> */}
             <div className="flex items-center gap-1">
               <h3 className="text-sm leading-none">{post.posterUsername}:</h3>
               <p className="text-xs font-light  flex items-center leading-3">

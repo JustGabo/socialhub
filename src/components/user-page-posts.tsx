@@ -14,7 +14,8 @@ function UserPagePosts() {
     const { data } = await supabase
       .from("posts")
       .select("*")
-      .eq("posterId", user?.id);
+      .eq("posterId", user?.id).
+      order("id", { ascending: false });
     if (data) {
       setPosts(data);
     }

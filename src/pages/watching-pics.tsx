@@ -8,7 +8,6 @@ function WatchingPics() {
   return (
     <div>
       <WatchPics id={id!}/>
-      <h2>hi</h2>
     </div>
   )
 }

@@ -40,7 +40,6 @@ function App() {
                   <Route path="/register" element={<RegisterPage />} />
                   <Route path="/create" element={<CreateAccountPage />} />
                   <Route path="/upload" element={<UploadPage />} />
-                  <Route path="/upload" element={<UploadPage />} />
                   <Route
                     path="/userdetails/:username"
                     element={<UserDetailsPage />}

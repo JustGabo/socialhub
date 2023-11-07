@@ -69,10 +69,10 @@ function UserPageHeader() {
                 <p className="text-xs">{posts?.length}</p>
               </div>
 
-              <Link to={`/watchfollowing/${user?.id}`} className="text-center font-light">
+              <div  className="text-center font-light">
                 <h3 className="text-sm">Following</h3>
                 <p className="text-xs">{following}</p>
-              </Link>
+              </div>
             </div>
           </header>
         </div>

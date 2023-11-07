@@ -1,7 +1,7 @@
 import { ChevronLeft, UserCircle2 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { Input } from "../components/ui/input";
 
 interface Usuario {
