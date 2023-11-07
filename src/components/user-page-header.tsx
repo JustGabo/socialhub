@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { UsingAccountContext } from "../context/accountContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { UseContext } from "../context/userContext";
 import { UsingFollowContext } from "../context/followContext";
 import {  UserCircle2 } from "lucide-react";
@@ -60,19 +60,19 @@ function UserPageHeader() {
 
             <h2 className="font-normal text-lg">{account.username}</h2>
             <div className="flex justify-between w-[75%]">
-              <div className="text-center font-light">
+              <Link to={`/watchfollowers/${user?.id}`} className="text-center font-light">
                 <h3 className="text-sm">Followers</h3>
                 <p className="text-xs">{followers}</p>
-              </div>
+              </Link>
               <div className="text-center font-light">
                 <h3 className="text-sm">Post</h3>
                 <p className="text-xs">{posts?.length}</p>
               </div>
 
-              <div className="text-center font-light">
+              <Link to={`/watchfollowing/${user?.id}`} className="text-center font-light">
                 <h3 className="text-sm">Following</h3>
                 <p className="text-xs">{following}</p>
-              </div>
+              </Link>
             </div>
           </header>
         </div>

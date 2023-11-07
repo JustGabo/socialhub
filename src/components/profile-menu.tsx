@@ -1,15 +1,11 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { Settings, ChevronLeft, LogOut, Trash, Pencil } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../supabase/client";
 import { Button } from "../components/ui/button";
 import { ModeToggle } from "../components//mode-toggle";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "../components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet";
 
 function ProfileMenu() {
   // usages
@@ -40,16 +36,16 @@ function ProfileMenu() {
         </button>
 
         <Sheet open={open} onOpenChange={(open) => setOpen(open)}>
-          <Button className="p-0 bg-transparent">
-            <SheetTrigger onClick={() => setOpen(true)}>
+          <SheetTrigger onClick={() => setOpen(true)} asChild>
+            <Button className="p-0 bg-transparent">
               <Settings
                 className="text-primary"
                 width={20}
                 height={20}
                 strokeWidth={1.5}
               />
-            </SheetTrigger>
-          </Button>
+            </Button>
+          </SheetTrigger>
 
           <SheetContent>
             <div className="h-full">
@@ -61,11 +57,10 @@ function ProfileMenu() {
                   </Link>
                 </Button>
 
-                <div className="mt-5">
-                </div>
+                <div className="mt-5"></div>
 
                 <ul className="absolute bottom-10 text-primary flex flex-col gap-5">
-                <ModeToggle/>
+                  <ModeToggle />
 
                   <li>
                     <Button
@@ -103,7 +98,9 @@ function ProfileMenu() {
         <div className="absolute w-full z-50 h-screen bg-secondary text-primary top-0 opacity-95">
           <div className="flex items-center justify-center h-full ">
             <div className="bg-primary animate-pulse  p-6 rounded-md">
-              <h2 className="text-center text-secondary text-sm">Getting Out...</h2>
+              <h2 className="text-center text-secondary text-sm">
+                Getting Out...
+              </h2>
             </div>
           </div>
         </div>

@@ -57,7 +57,7 @@ const Comments = () => {
   return (
     <main className="py-4 px-4 text-primary h-screen">
       <header className="border-b border-muted fixed w-full px-2 right-0 left-0 pb-2">
-        <Link to={"/"}>
+        <Link  to={"/"}>
           <ChevronLeft />
         </Link>
       </header>
@@ -102,6 +102,7 @@ const Comments = () => {
         className="flex gap-2 fixed bottom-0 w-full mb-2 px-4  right-0 left-0"
       >
         <Input
+        autoFocus
           onChange={(e) => handleChange(e)}
           type="text"
           placeholder="Write a comment"

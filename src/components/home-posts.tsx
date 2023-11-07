@@ -10,18 +10,36 @@ const getRelativeTime = (date: string) => {
 
   const diff = currentDate.getTime() - Date.now();
 
+
   const hour = 1000 * 60 * 60;
   const day = 1000 * 60 * 60 * 24;
   const week = day * 7;
 
-  if (diff < hour) {
-    return relativeTime.format(Math.ceil(diff / 1000 / 60 / 60 * 24), "minutes");
-  } else if (diff < day) {
-    return relativeTime.format(Math.ceil(diff / hour / 60), "hours");
-  } else if (diff < week) {
-    return relativeTime.format(Math.ceil(diff / day), "days");
-  } else {
-    return relativeTime.format(Math.ceil(diff / week), "weeks");
+  const absDiff = Math.abs(diff);
+
+  // if it's less than an hour, format to minutes
+  if (absDiff < hour) {
+    const minutes = Math.floor(diff / 1000 / 60);
+
+    return relativeTime.format(minutes, "minute");
+  }
+
+  // if it's less than a day, format to hours
+  if (absDiff < day) {
+    const hours = Math.floor(diff / 1000 / 60 / 60);
+    return relativeTime.format(hours, "hour");
+  }
+
+  // if it's less than a week, format to days
+  if (absDiff < week) {
+    const days = Math.floor(diff / 1000 / 60 / 60 / 24);
+    return relativeTime.format(days, "day");
+  }
+
+  // if it's less than a month, format to weeks
+  if (absDiff < week * 4) {
+    const weeks = Math.floor(diff / 1000 / 60 / 60 / 24 / 7);
+    return relativeTime.format(weeks, "week");
   }
 };
 
@@ -41,8 +59,6 @@ function HomePosts() {
   // useeffects
   useEffect(() => {
     gettingPosts();
-
-  
   }, []);
 
   return (
@@ -73,14 +89,16 @@ function HomePosts() {
             />
             <div className="flex items-center gap-1">
               <h3 className="text-sm leading-none">{post.posterUsername}:</h3>
-              <p className="text-xs font-light  flex items-center leading-3">  
+              <p className="text-xs font-light  flex items-center leading-3">
                 {post.caption}
               </p>
               <small className="ml-auto">
                 {getRelativeTime(post.created_at)}
               </small>
             </div>
-            <Link className="text-xs text-muted" to={`/comments/${post.id}`}>View Comments</Link>
+            <Link className="text-xs text-muted" to={`/comments/${post.id}`}>
+              View Comments
+            </Link>
           </div>
         );
       })}

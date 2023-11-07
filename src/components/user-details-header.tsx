@@ -142,10 +142,10 @@ function UserDetailsHeader() {
             <p className="text-xs">{posts?.length}</p>
           </div>
 
-          <div className="text-center">
+          <Link to={`/watchfollowing/${account?.id}`} className="text-center">
             <h3 className="text-sm">Following</h3>
             <p className="text-xs">{following?.length}</p>
-          </div>
+          </Link>
         </div>
       </header>
 

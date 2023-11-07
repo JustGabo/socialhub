@@ -1,4 +1,4 @@
-import WatchFollow from '../components/watchingFollow'
+import WatchFollow from '../components/watchingFollowers'
 
 function WatchingFollowers() {
   return (

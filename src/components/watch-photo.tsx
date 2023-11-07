@@ -48,7 +48,7 @@ function WatchPhoto({ id }: Props) {
                     className="w-8 h-8 rounded-full object-cover"
                     src={post.posterImg}
                     alt=""
-                  /> : <UserCircle2 className="w-8 h-8 text-primary" />}
+                  /> : <UserCircle2 strokeWidth={.5} className="w-8 h-8 text-primary" />}
 
                   <p className="text-xs">{post.posterUsername}</p>
                   </section>

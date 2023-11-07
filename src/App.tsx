@@ -20,6 +20,7 @@ import WatchPage from "./pages/watching-pics";
 import UserDetailsPage from "./pages/userDetails";
 import CommentsPage from './pages/comments'
 import WatchFollowersPage from './pages/watching-followers'
+import WatchingFollowingPage from './pages/watchingFollowing'
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
                   <Route path="/watch/:id" element={<WatchPage />} />
                   <Route path="/comments/:id" element={<CommentsPage />} />
                   <Route path="/watchfollowers/:id" element={<WatchFollowersPage />} />
+                  <Route path="/watchfollowing/:id" element={<WatchingFollowingPage />} />
                 </Routes>
               </div>
             </div>

@@ -1,44 +1,56 @@
 import { ChevronLeft, UserCircle2 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { supabase } from "../supabase/client";
 import { Follower } from "../types/index";
 
-function WatchingFollow() {
+function WatchingFollowing() {
   const { id } = useParams();
-  const [followers, setFollowers] = useState<Follower[] | null>([]);
+  const [followings, setFollowings] = useState<Follower[] | null>([]);
+  const [followingId, setFollowingId] = useState('')
+  const [name, setName] = useState('')
 
-  const gettingFollowers = async () => {
-    const res = await supabase.from("follow").select("*").eq("followingId", id);
-    setFollowers(res.data);
+
+  const gettingFollowing = async () => {
+    const {data} = await supabase.from("follow").select("*").eq("followerId", id).single();
+    // setFollowings(res.data);
+    console.log(data.followingId)
+
   };
 
+
+  const gettingUser = async () => {
+    const {data} = await supabase.from('usuario').select('username').eq('id', id).single()
+    setName(data?.username)
+  }
+
+
   useEffect(() => {
-    gettingFollowers();
-    console.log(followers);
+    gettingFollowing();
+    gettingUser()
   }, []);
 
   return (
     <div className="py-6 px-4">
       <header className="mb2">
-        <button className="bg-transparent p-0">
+        <Link to={`/userdetails/${name}`} className="bg-transparent p-0">
           <ChevronLeft
             className="text-primary"
             strokeWidth={1.2}
             width={25}
             height={25}
           />
-        </button>
+        </Link>
       </header>
       <main className="mt-10">
-        <h2 className="text-center">Followers</h2>
+        <h2 className="text-center">Following</h2>
         <section className="flex flex-col gap-3 mt-10">
-          {followers?.length == 0 ? (
+          {followings?.length == 0 ? (
             <h2 className="flex mt-44 items-center justify-center">
-              This user don't have followers
+              This user doesn't follow anyone yet
             </h2>
           ) : (
-            followers?.map((follower) => {
+            followings?.map((follower) => {
               return (
                 <div className=" flex items-center shadow-2xl gap-1 border border-primary/30 rounded-md p-2" key={follower.id}>
                   
@@ -54,4 +66,4 @@ function WatchingFollow() {
   );
 }
 
-export default WatchingFollow;
+export default WatchingFollowing;
