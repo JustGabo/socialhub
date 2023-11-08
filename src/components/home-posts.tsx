@@ -4,7 +4,6 @@ import { Posts } from "../types/index";
 import { UserCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-
 const getRelativeTime = (date: string) => {
   const currentDate = new Date(date);
   const relativeTime = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
@@ -126,12 +125,21 @@ function HomePosts() {
                 <HeartIcon className="w-5 h-5" />
               </Button>
             </div> */}
-            <div className="flex items-center gap-1">
-              <h3 className="text-sm leading-none">{post.posterUsername}:</h3>
-              <p className="text-xs font-light  flex items-center leading-3">
-                {post.caption}
-              </p>
-              <small className="ml-auto">
+            <div className="flex items-center">
+              <div className="flex items-center gap-1">
+                <h3 className="text-sm leading-none">
+                  {post.caption ? (
+                    `${post.posterUsername}:`
+                  ) : (
+                    <p className="text-sm font-bold">No caption</p>
+                  )}
+                </h3>
+                <p className="text-xs font-light  flex items-center leading-3">
+                  {post.caption}
+                </p>
+              </div>
+
+              <small className=" ml-auto">
                 {getRelativeTime(post.created_at)}
               </small>
             </div>

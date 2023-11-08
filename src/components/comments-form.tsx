@@ -55,9 +55,6 @@ const CommentsForm = () => {
     gettingComments();
   }, []);
 
-  useEffect(()=>{
-    console.log(response)
-  },[response])
 
   return (
     <main className="py-4 px-4 text-primary h-screen">

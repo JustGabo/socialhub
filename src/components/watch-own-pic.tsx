@@ -104,7 +104,7 @@ function WatchPhoto({id}: Props) {
 
                 <Link
                   className="text-xs text-muted"
-                  to={`/post/comments/${post.id}`}
+                  to={`/comments/${post.id}`}
                 >
                   View Comments
                 </Link>

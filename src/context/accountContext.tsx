@@ -24,7 +24,6 @@ const initialState: accountState = {
     image: "",
   },
   getAccount: () => {},
-
 };
 
 export const AccountContext = createContext<accountState>(initialState);
@@ -41,9 +40,12 @@ function AccountContextProvider({ children }: Props) {
     const {
       data: { bio, image, username },
     } = await supabase.from("usuario").select().eq("id", user?.id).single();
-    
 
-    setAccount({ username, bio, image });
+    setAccount({
+      username,
+      bio,
+      image,
+    });
   };
 
   const [account, setAccount] = useState({
@@ -54,12 +56,14 @@ function AccountContextProvider({ children }: Props) {
 
   const value = {
     account,
-    gettingAccount
+    gettingAccount,
   };
 
   useEffect(() => {
     if (user) {
-      gettingAccount();
+      setTimeout(() => {
+        gettingAccount();
+      }, 5000);
     }
   }, [user]);
 

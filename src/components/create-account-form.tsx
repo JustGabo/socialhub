@@ -33,7 +33,7 @@ function CreateAccountForm() {
 
   const getUser = async () => {
     const res = await supabase.auth.getUser();
-    console.log(res);
+    return res
   };
 
   useEffect(() => {

@@ -4,6 +4,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../supabase/client";
 import { Button } from "../components/ui/button";
 import { ModeToggle } from "../components//mode-toggle";
+import { UseContext } from "../context/userContext";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTrigger,
+} from "../components/ui/dialog";
 
 import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet";
 
@@ -12,8 +20,30 @@ function ProfileMenu() {
   const navigate = useNavigate();
   const [gettingOut, setGettingOut] = useState(false);
   const [open, setOpen] = useState(false);
+  const { user } = UseContext();
+  const [modal, setModal] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
 
   //   functions
+  const deletingAccount = async () => {
+    const res = await supabase.from("usuario").delete().eq("id", user?.id);
+    if (res.status == 204) {
+      setModal(true);
+      activatingModal();
+    }
+  };
+
+  const activatingModal = () => {
+    setTimeout(() => {
+      setModal(false);
+      signOut();
+    }, 2000);
+  };
+
+  const signOut = async () => {
+    const res = await supabase.auth.signOut();
+    return res;
+  };
 
   // useEffect
 
@@ -77,16 +107,32 @@ function ProfileMenu() {
                       <span className="ml-2 text-sm">Log Out</span>
                     </Button>
                   </li>
-
-                  <Button
-                    className="flex items-center text-red-500 bg-transparent text-sm"
-                    onClick={() => {
-                      navigate("/login");
-                    }}
-                  >
-                    <Trash width={20} height={20} strokeWidth={1} />
-                    <span className="ml-2 text-sm">Delete Account</span>
-                  </Button>
+                  <Dialog open={openDialog} onOpenChange={(open) => setOpenDialog(open)}>
+                    <DialogContent className="w-[95%] text-primary bg-secondary h-72 py-4">
+                      <DialogDescription className="py-10">
+                        If you do this, all the content related to your account
+                        and your account as well, will be deleted
+                      </DialogDescription>
+                      <Button
+                        className="bg-red-500"
+                        onClick={() => {
+                          setOpenDialog(false);
+                          setOpen(false);
+                          deletingAccount()
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </DialogContent>
+                    <DialogTrigger onClick={()=> setOpenDialog(true)} asChild>
+                      <Button
+                        className="flex items-center text-red-500 bg-transparent text-sm"
+                      >
+                        <Trash width={20} height={20} strokeWidth={1} />
+                        <span className="ml-2 text-sm">Delete Account</span>
+                      </Button>
+                    </DialogTrigger>
+                  </Dialog>
                 </ul>
               </div>
             </div>
@@ -105,6 +151,13 @@ function ProfileMenu() {
           </div>
         </div>
       )}
+      <div
+        className={`shadow-lg p-4 absolute bottom-32 ${
+          modal ? "opacity-100" : "opacity-0"
+        } border transition-all duration-1000 border-primary/25 text-xs bg-secondary rounded-md right-0 z-10`}
+      >
+        Your account was deleted successfully
+      </div>
     </div>
   );
 }

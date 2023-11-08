@@ -162,11 +162,11 @@ function EditProfileForm() {
       </section>
 
       <div
-          className={`shadow-lg p-4 absolute bottom-44 ${
+          className={`shadow-lg p-4 absolute bottom-32 ${
             modal ? "opacity-100" : "opacity-0"
           } border transition-all duration-1000 border-primary/25 text-xs bg-secondary rounded-md right-0 z-10`}
         >
-          Your photo was uploaded successfully
+          Your profile was updated successfully
         </div>
     </div>
   );
