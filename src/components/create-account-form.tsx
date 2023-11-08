@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UseContext } from "../context/userContext";
 import {Button} from '../components/ui/button'
 import {Input} from '../components/ui/input'
+import Logo from '../../public/3.png'
 
 function CreateAccountForm() {
   const navigate = useNavigate();
@@ -44,9 +45,15 @@ function CreateAccountForm() {
   return (
     <div className="flex items-center justify-center text-primary h-screen px-4 py-6">
       <div className="w-full ">
-        <h2 className="mb-10 text-xl font-medium text-center">
-          Create Account
-        </h2>
+      <div className="p-2 ">
+          <img src={Logo} className="w-full  m-auto object-cover h-32" alt="" />
+        </div>
+        <section className="flex items-center mb-5">
+          <div className="h-[0.5px] w-full bg-muted"></div>
+          <h2 className=" text-sm font-medium  text-center">Create</h2>
+
+          <div className="h-[0.5px] w-full bg-muted"></div>
+        </section>
         <form
           action=""
           className="flex flex-col gap-4 px-4 w-[90%] m-auto text-sm"
