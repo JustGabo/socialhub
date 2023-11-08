@@ -3,18 +3,21 @@ import { supabase } from "../supabase/client";
 import { ChevronLeft, Pencil, UserCircle2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { UseContext } from "../context/userContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UsingAccountContext } from "../context/accountContext";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 
 function EditProfileForm() {
   // usages
+  const navigate = useNavigate()
   const [file, setFile] = useState<File | null>(null);
   const { user } = UseContext();
   const { account } = UsingAccountContext();
   const [name, setName] = useState<string>(() => account.username || "");
   const [imageUrl, setImageUrl] = useState<string>(() => account.image || "");
+  const [modal, setModal] = useState(false);
+
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     // Do something with the files
@@ -38,7 +41,18 @@ function EditProfileForm() {
       .from("usuario")
       .update({ username: name, image: imageUrl })
       .eq("id", user?.id);
+      if(res.status == 204){
+        setModal(true)
+        activatingModal()
+      }
       return res
+  };
+
+  const activatingModal = () => {
+    setTimeout(() => {
+      setModal(false);
+      navigate("/profile");
+    }, 2000);
   };
 
 
@@ -146,6 +160,14 @@ function EditProfileForm() {
           </Button>
         </form>
       </section>
+
+      <div
+          className={`shadow-lg p-4 absolute bottom-44 ${
+            modal ? "opacity-100" : "opacity-0"
+          } border transition-all duration-1000 border-primary/25 text-xs bg-secondary rounded-md right-0 z-10`}
+        >
+          Your photo was uploaded successfully
+        </div>
     </div>
   );
 }

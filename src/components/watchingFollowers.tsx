@@ -51,11 +51,11 @@ function WatchingFollow() {
           ) : (
             followers?.map((follower) => {
               return (
-                <div className=" flex items-center shadow-2xl gap-1 border border-primary/30 rounded-md p-2" key={follower.id}>
+                <Link to={`/userdetails/${follower.followerName}`} className=" flex items-center shadow-2xl gap-1 border border-primary/30 rounded-md p-2" key={follower.id}>
                   
                   {follower.followerImg ? <img src={follower.followerImg} alt="" /> : <UserCircle2 className="text-primary/75" width="15%" height="15%" strokeWidth={0.5} /> }
                   <h2 className="text-sm font-light">{follower.followerName}</h2>
-                </div>
+                </Link>
               );
             })
           )}
