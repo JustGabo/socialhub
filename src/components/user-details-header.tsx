@@ -23,6 +23,7 @@ function UserDetailsHeader() {
   const [posts, setPosts] = useState<Posts[] | null>([]);
   const [load, setLoad] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [isYou, setIsYou] = useState(false);
 
   // functions and fetchs
 
@@ -79,7 +80,8 @@ function UserDetailsHeader() {
     const res = await supabase
       .from("posts")
       .select()
-      .eq("posterId", account?.id);
+      .eq("posterId", account?.id)
+      .order("id", { ascending: false });
     setPosts(res.data);
   };
 
@@ -93,6 +95,16 @@ function UserDetailsHeader() {
     });
   };
 
+  const checkingIsYou = () => {
+    followers?.map((follower) => {
+      if (follower.followingId == user?.id) {
+        setIsYou(true);
+      } else {
+        setIsYou(false);
+      }
+    });
+  };
+
   useEffect(() => {
     gettingAccount();
   }, []);
@@ -100,6 +112,7 @@ function UserDetailsHeader() {
   useEffect(() => {
     if (followers) {
       checkingIsFollowing();
+      checkingIsYou();
     }
   }, [followers]);
 
@@ -128,7 +141,7 @@ function UserDetailsHeader() {
         <div className="flex justify-between w-[75%]">
           <Link to={`/watchfollowers/${account?.id}`} className="text-center">
             <h3 className="text-sm">Followers</h3>
-            <p  className="text-xs">{followers?.length}</p>
+            <p className="text-xs">{followers?.length}</p>
           </Link>
           <div className="text-center">
             <h3 className="text-sm ">Post</h3>
@@ -143,26 +156,32 @@ function UserDetailsHeader() {
       </header>
 
       <div className="w-full px-4">
-        {!isFollowing ? (
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              follow();
-            }}
-            className="bg-blue-500 w-full h-[40px] rounded-md text-sm"
-          >
-            Follow
-          </Button>
+        {isYou ? (
+          <div></div>
         ) : (
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              stopFollow();
-            }}
-            className="w-full bg-muted h-[40px] rounded-md text-sm"
-          >
-            Following
-          </Button>
+          <div>
+            {!isFollowing ? (
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  follow();
+                }}
+                className="bg-blue-500 w-full h-[40px] rounded-md text-sm"
+              >
+                Follow
+              </Button>
+            ) : (
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  stopFollow();
+                }}
+                className="w-full bg-muted h-[40px] rounded-md text-sm"
+              >
+                Unfollow
+              </Button>
+            )}
+          </div>
         )}
       </div>
 

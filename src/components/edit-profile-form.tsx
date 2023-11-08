@@ -26,13 +26,7 @@ function EditProfileForm() {
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  useEffect(() => {
-    if (!account) return;
 
-
-    setImageUrl(account.image || "");
-    setName(account.username || "");
-  }, [account]);
 
   // functions
 
@@ -52,7 +46,7 @@ function EditProfileForm() {
     setTimeout(() => {
       setModal(false);
       navigate("/profile");
-    }, 2000);
+    }, 3000);
   };
 
 
@@ -90,6 +84,17 @@ function EditProfileForm() {
     //   .eq("id", user?.id);
     // console.log(res);
   };
+
+  // useeffect
+
+  useEffect(() => {
+    if (!account) return;
+
+
+    setImageUrl(account.image || "");
+    setName(account.username || "");
+  }, [account]);
+
 
   return (
     <div className="text-primary w-[95%] m-auto grid gap-5">
@@ -162,7 +167,7 @@ function EditProfileForm() {
       </section>
 
       <div
-          className={`shadow-lg p-4 absolute bottom-44 ${
+          className={`shadow-lg p-4 absolute bottom-32 ${
             modal ? "opacity-100" : "opacity-0"
           } border transition-all duration-1000 border-primary/25 text-xs bg-secondary rounded-md right-0 z-10`}
         >
