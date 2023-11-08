@@ -39,7 +39,7 @@ function UserPagePosts() {
           <div  className="grid grid-cols-3 gap-1">
             {posts?.map((post) => {
               return (
-                <Link to={`/watch/${post.id}`} key={post.id}>
+                <Link to={`/watchingOwnPost/${post.id}`} key={post.id}>
                   <img
                     className="aspect-square object-cover"
                     src={post.url}

@@ -16,6 +16,7 @@ const CommentsForm = () => {
   const [commentInput, setCommentInput] = useState<string>("");
   const { account } = UsingAccountContext();
   const [loading, setLoading] = useState<boolean>(true);
+  const [response, setResponse] = useState(``)
 
   // functions
   const gettingComments = async () => {
@@ -54,6 +55,10 @@ const CommentsForm = () => {
     gettingComments();
   }, []);
 
+  useEffect(()=>{
+    console.log(response)
+  },[response])
+
   return (
     <main className="py-4 px-4 text-primary h-screen">
       <header className="border-b border-muted fixed w-full px-2 right-0 left-0 pb-2">
@@ -76,7 +81,7 @@ const CommentsForm = () => {
               <section className="flex flex-col mt-12 gap-5">
                 {comment.map((comment) => {
                   return (
-                    <div key={comment.id} className="flex items-center gap-1">
+                    <div onClick={()=> setResponse(comment.posterName)} key={comment.id} className="flex items-center gap-1">
                       <h3 className="font-medium text-sm leading-none ">
                         {comment.posterName}:
                       </h3>
@@ -106,7 +111,7 @@ const CommentsForm = () => {
           onChange={(e) => handleChange(e)}
           type="text"
           placeholder="Write a comment"
-          value={commentInput}
+          value={commentInput || response}
         />
         <Button disabled={commentInput == ""}>Comment</Button>
       </form>

@@ -177,7 +177,7 @@ function UserDetailsHeader() {
               {posts?.map((post) => {
                 return (
                   <div key={post.id}>
-                    <Link to={`/watch/${post.id}`}>
+                    <Link to={`/watchingPost/${post.id}`}>
                       <img
                         className="aspect-square object-cover"
                         src={post.url}

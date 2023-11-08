@@ -1,4 +1,4 @@
-import WatchPics from '../components/watch-photo'
+import WatchOtherPics from '../components/watch-others-pic'
 import { useParams } from 'react-router-dom'
 
 function WatchingPics() {
@@ -7,7 +7,7 @@ function WatchingPics() {
 
   return (
     <div>
-      <WatchPics id={id!}/>
+      <WatchOtherPics id={id!}/>
     </div>
   )
 }

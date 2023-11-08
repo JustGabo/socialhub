@@ -16,7 +16,8 @@ import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import CreateAccountPage from "./pages/create-account";
 import UploadPage from "./pages/upload";
-import WatchPage from "./pages/watching-pics";
+import WatchPage from "./pages/watching-own-pics";
+import WatchingOthersPicsPage from './pages/watching-others-pics'
 import UserDetailsPage from "./pages/userDetails";
 import CommentsPage from './pages/comments'
 import WatchFollowersPage from './pages/watching-followers'
@@ -45,7 +46,8 @@ function App() {
                     element={<UserDetailsPage />}
                   />
                   <Route path="/edit" element={<EditPage />} />
-                  <Route path="/watch/:id" element={<WatchPage />} />
+                  <Route path="/watchingOwnPost/:id" element={<WatchPage />} />
+                  <Route path="/watchingPost/:id" element={<WatchingOthersPicsPage/>}></Route>
                   <Route path="/comments/:id" element={<CommentsPage />} />
                   <Route path="/watchfollowers/:id" element={<WatchFollowersPage />} />
                   <Route path="/watchfollowing/:id" element={<WatchingFollowingPage />} />
