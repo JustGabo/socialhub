@@ -3,8 +3,6 @@ import { supabase } from "../supabase/client";
 import { Posts } from "../types/index";
 import { UserCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { HeartIcon } from "lucide-react";
-import { Button } from "../components/ui/button";
 
 const getRelativeTime = (date: string) => {
   const currentDate = new Date(date);

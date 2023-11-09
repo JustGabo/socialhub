@@ -188,15 +188,13 @@ function UserDetailsHeader() {
       </header>
 
       <div className="w-full px-4">
-        {isYou ? (
-          <div></div>
-        ) : (
-          <div>
             {!isFollowing ? (
               <Button
+              disabled={isYou}
                 onClick={(e) => {
                   e.preventDefault();
                   follow();
+                  
                 }}
                 className="bg-blue-500 w-full h-[40px] rounded-md text-sm"
               >
@@ -213,8 +211,6 @@ function UserDetailsHeader() {
                 Unfollow
               </Button>
             )}
-          </div>
-        )}
       </div>
 
       <div className="border-t border-muted w-full text-primary py-4 px-2">
