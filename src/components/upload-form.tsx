@@ -46,8 +46,7 @@ function UploadForm() {
       .upload(`img-${Date.now()}`, file);
 
     if (error) {
-      console.log(error);
-      return;
+      return console.error(error);
     }
 
     const {
