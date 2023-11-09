@@ -5,19 +5,18 @@ import { supabase } from "../supabase/client";
 import { UseContext } from "../context/userContext";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-// import { UsingAccountContext } from "../context/accountContext";
 import { useNavigate } from "react-router-dom";
-import {UsingAccountContext} from '../context/accountContext'
+import { UsingAccountContext } from "../context/accountContext";
 
 function UploadForm() {
   // states and usses
   const [file, setFile] = useState<File | null>(null);
   const { user } = UseContext();
-  // const { account } = UsingAccountContext();
   const [caption, setCaption] = useState("");
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
-  const {account} = UsingAccountContext()
+  const { account } = UsingAccountContext();
+  const [posting, setPosting] = useState(false);
 
   // functions and fetchs
 
@@ -64,13 +63,14 @@ function UploadForm() {
     if (res.status === 201) {
       setModal(true);
       activatingModal();
+      setPosting(false);
     }
   };
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <div className=" py-6 text-primary">
+    <div className={` py-6 ${posting && "opacity-50"} text-primary`}>
       <div className="px-4 grid gap-5">
         <h2 className="text-2xl text-center">Upload a photo</h2>
 
@@ -109,10 +109,12 @@ function UploadForm() {
                 onClick={(e) => {
                   e.preventDefault();
                   addingPicture();
+                  setPosting(true);
                 }}
+                disabled={posting}
                 className="w-full h-[40px] bg-blue-500 rounded-md"
               >
-                Post
+                {posting ? "Posting..." : "Post"}
               </Button>
             </form>
           </section>

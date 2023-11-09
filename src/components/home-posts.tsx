@@ -3,6 +3,8 @@ import { supabase } from "../supabase/client";
 import { Posts } from "../types/index";
 import { UserCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { HeartIcon } from "lucide-react";
+import { Button } from "../components/ui/button";
 
 const getRelativeTime = (date: string) => {
   const currentDate = new Date(date);
@@ -56,15 +58,8 @@ function HomePosts() {
     setPosts(res.data);
   };
 
-  // const likingPost = async (id: number) => {
-  //   const res = await supabase.from("likes").insert({
-  //     likedPostId: id,
-  //     likerId: user?.id,
-  //     likerName: account?.username,
-  //     likerImg: account?.image,
-  //   });
-  //   console.log(res);
-  // };
+
+
 
   // const unlikingPost = async (id: number) => {
   //   const res = await supabase.from("likes").delete().match({
@@ -115,15 +110,15 @@ function HomePosts() {
               alt=""
             />
             {/* <div className="flex items-center gap-1">
-              <Button
-                className="bg-transparent text-primary p-0 h-min"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // likingPost(post.id);
-                }}
-              >
-                <HeartIcon className="w-5 h-5" />
-              </Button>
+
+                <Button
+                  className="bg-transparent text-primary p-0 h-min"
+                  onClick={() => {
+                    // likingPost(post.id);
+                  }}
+                >
+                  <HeartIcon className="w-5 h-5" />
+                </Button>
             </div> */}
             <div className="flex items-center">
               <div className="flex items-center gap-1">

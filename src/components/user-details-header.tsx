@@ -20,7 +20,7 @@ function UserDetailsHeader() {
   const [account, setAccount] = useState<User | null>(null);
   const [followers, setFollowers] = useState<Follower[] | null>(null);
   const [following, setFollowing] = useState<Follower[] | null>(null);
-  const [posts, setPosts] = useState<Posts[] | null>([]);
+  const [posts, setPosts] = useState<Posts[] | null>(null);
   const [load, setLoad] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isYou, setIsYou] = useState(false);
@@ -85,12 +85,11 @@ function UserDetailsHeader() {
     setPosts(res.data);
   };
 
+
   const checkingIsFollowing = () => {
     followers?.map((follower) => {
       if (follower.followerId == user?.id) {
         setIsFollowing(true);
-      } else {
-        setIsFollowing(false);
       }
     });
   };
@@ -140,18 +139,51 @@ function UserDetailsHeader() {
         <h2>{account?.username}</h2>
         <div className="flex justify-between w-[75%]">
           <Link to={`/watchfollowers/${account?.id}`} className="text-center">
-            <h3 className="text-sm">Followers</h3>
-            <p className="text-xs">{followers?.length}</p>
+            {followers == null ? (
+              <div className="flex flex-col gap-2 items-center">
+                <h3 className="animate-pulse w-16 h-3 bg-muted/50 rounded-lg"></h3>
+                <p className="animate-pulse w-10 h-3 bg-muted/50 rounded-lg"></p>
+              </div>
+            ) : (
+              <div>
+                <h3 className="text-sm">Followers</h3>
+                <p className="text-xs">{followers?.length}</p>
+              </div>
+            )}
           </Link>
-          <div className="text-center">
-            <h3 className="text-sm ">Post</h3>
-            <p className="text-xs">{posts?.length}</p>
+
+          <div>
+            {posts == null ? (
+              <div className="flex flex-col gap-2 items-center">
+                <h3 className="animate-pulse w-16 h-3 bg-muted/50 rounded-lg"></h3>
+                <p className="animate-pulse w-10 h-3 bg-muted/50 rounded-lg"></p>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-1 items-center">
+                <h3 className="text-sm ">Post</h3>
+                <p className="text-xs">{posts?.length}</p>
+              </div>
+            )}
           </div>
 
-          <div className="text-center">
+          <div>
+            {following == null ? (
+              <div className="flex flex-col gap-2 items-center">
+                <h3 className="animate-pulse w-16 h-3 bg-muted/50 rounded-lg"></h3>
+                <p className="animate-pulse w-10 h-3 bg-muted/50 rounded-lg"></p>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-1 items-center">
+                <h3 className="text-sm">Following</h3>
+                <p className="text-xs">{following?.length}</p>
+              </div>
+            )}
+          </div>
+
+          {/* <div className="text-center">
             <h3 className="text-sm">Following</h3>
             <p className="text-xs">{following?.length}</p>
-          </div>
+          </div> */}
         </div>
       </header>
 
