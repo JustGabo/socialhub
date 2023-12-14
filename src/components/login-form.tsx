@@ -51,9 +51,9 @@ function Login() {
         <div className="p-2 ">
           <img src={Logo} className="w-full  m-auto object-cover h-32" alt="" />
         </div>
-        <section className="flex items-center mb-5">
+        <section className="flex items-center justify-center mb-10">
           <div className="h-[0.5px] w-full bg-muted"></div>
-          <h2 className=" text-sm font-medium  text-center">LogIn</h2>
+          <h2 className=" text-sm  font-medium  text-center">LogIn</h2>
           <div className="h-[0.5px] w-full bg-muted"></div>
         </section>
         <form

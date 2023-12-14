@@ -82,7 +82,7 @@ const CommentsForm = () => {
                       <h3 className="font-medium text-sm leading-none ">
                         {comment.posterName}:
                       </h3>
-                      <p className="text-xs font-light leading-3 flex items-center">
+                      <p className="text-xs font-light leading-2 flex items-center">
                         {comment.content}
                       </p>
                     </div>
